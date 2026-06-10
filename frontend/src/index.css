@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Plus+Jakarta+Sans:wght@700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 20% 95%; /* Light gray to contrast perfectly with white cards */
+    --foreground: 220 20% 3%;
+    --card: 0 0% 100%; /* White cards for contrast */
+    --primary: 185 100% 45%;
+    --cyber-grid: 210 20% 90%;
+  }
+
+  .dark {
+    --background: 220 20% 3%;
+    --foreground: 210 40% 96%;
+    --card: 220 18% 5%;
+    --primary: 185 100% 45%;
+    --cyber-grid: 220 12% 10%;
+  }
+  
+  html {
+    font-size: 14px; /* Globally scales down Tailwind's rem units (default is 16px) */
+  }
+  
+  body {
+    @apply bg-background text-foreground antialiased transition-colors duration-300;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+}
+
+@media (pointer: fine) {
+  body, a, button, [role="button"], input, select, textarea {
+    cursor: none;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent;
+  }
+
+  .cyber-grid {
+    background-image: 
+      linear-gradient(hsl(var(--cyber-grid) / 0.3) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--cyber-grid) / 0.3) 1px, transparent 1px);
+    background-size: 80px 80px;
+  }
+
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    pointer-events: none;
+  }
+
+  .orb-blue {
+    background: radial-gradient(circle, hsl(185 100% 45% / 0.35), transparent 70%);
+  }
+
+  /* Custom Cyber Scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(10, 14, 20, 0.5);
+    border-radius: 8px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(34, 211, 238, 0.2);
+    border-radius: 8px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(34, 211, 238, 0.5);
+  }
+}
