@@ -25,13 +25,13 @@ export const WhyUs = () => {
         
         {/* Hero Section */}
         <ScrollReveal className="text-center mb-24">
-          <div className="inline-flex items-center justify-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-[11px] font-bold uppercase tracking-wider text-cyan-400 mb-6">
+          <div className="inline-flex items-center justify-center gap-2 px-4 py-1.5 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[11px] font-bold uppercase tracking-wider text-gray-900 dark:text-gray-200 mb-6">
             <Award className="h-4 w-4" />
             <span>The Nexavise Advantage</span>
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-6 text-gray-900 dark:text-white tracking-tight">
             Why Partner With <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Nexavise Consulting?</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-300 to-gray-500">Nexavise Consulting?</span>
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
             We don't just find vulnerabilities—we engineer resilience. Our proven metrics and uncompromising service level agreements ensure your enterprise is always protected, compliant, and operational.
@@ -41,7 +41,7 @@ export const WhyUs = () => {
         {/* Resilience Metrics Section */}
         <div id="metrics" className="scroll-mt-32 mb-32">
           <div className="flex items-center gap-4 mb-10 border-b border-gray-200 dark:border-white/5 pb-4">
-            <div className="p-3 rounded-2xl bg-cyan-500/10 text-cyan-500 dark:text-cyan-400">
+            <div className="p-3 rounded-2xl bg-black/5 dark:bg-white/5 text-gray-900 dark:text-white">
               <ShieldCheck className="h-8 w-8" />
             </div>
             <div>
@@ -52,9 +52,9 @@ export const WhyUs = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <ScrollReveal delay={0.1}>
-              <div className="p-8 rounded-3xl bg-white dark:bg-[#0a0e14] border border-gray-200 shadow-sm dark:shadow-none dark:border-white/5 text-center flex flex-col items-center justify-center transition-all hover:border-cyan-500/30">
-                <div className="p-4 rounded-full bg-cyan-50 dark:bg-cyan-500/10 mb-6">
-                  <Users className="h-8 w-8 text-cyan-500" />
+              <div className="p-8 rounded-3xl bg-white dark:bg-[#0a0e14] border border-gray-200 shadow-sm dark:shadow-none dark:border-white/5 text-center flex flex-col items-center justify-center transition-all hover:border-black/10 dark:border-white/10">
+                <div className="p-4 rounded-full bg-gray-100 dark:bg-white/5 mb-6">
+                  <Users className="h-8 w-8 text-gray-900 dark:text-gray-200" />
                 </div>
                 <span className="text-5xl font-black text-gray-900 dark:text-white mb-2">500+</span>
                 <span className="text-xs text-gray-500 font-bold uppercase tracking-widest">Global Clients Secured</span>
@@ -63,7 +63,7 @@ export const WhyUs = () => {
             </ScrollReveal>
 
             <ScrollReveal delay={0.2}>
-              <div className="p-8 rounded-3xl bg-white dark:bg-[#0a0e14] border border-gray-200 shadow-sm dark:shadow-none dark:border-white/5 text-center flex flex-col items-center justify-center transition-all hover:border-cyan-500/30">
+              <div className="p-8 rounded-3xl bg-white dark:bg-[#0a0e14] border border-gray-200 shadow-sm dark:shadow-none dark:border-white/5 text-center flex flex-col items-center justify-center transition-all hover:border-black/10 dark:border-white/10">
                 <div className="p-4 rounded-full bg-purple-50 dark:bg-[#b48eed]/10 mb-6">
                   <Shield className="h-8 w-8 text-[#b48eed]" />
                 </div>
@@ -74,11 +74,11 @@ export const WhyUs = () => {
             </ScrollReveal>
 
             <ScrollReveal delay={0.3}>
-              <div className="p-8 rounded-3xl bg-white dark:bg-[#0a0e14] border border-gray-200 shadow-sm dark:shadow-none dark:border-white/5 text-center flex flex-col items-center justify-center transition-all hover:border-cyan-500/30">
-                <div className="p-4 rounded-full bg-blue-50 dark:bg-blue-500/10 mb-6">
-                  <Target className="h-8 w-8 text-blue-500" />
+              <div className="p-8 rounded-3xl bg-white dark:bg-[#0a0e14] border border-gray-200 shadow-sm dark:shadow-none dark:border-white/5 text-center flex flex-col items-center justify-center transition-all hover:border-black/10 dark:border-white/10">
+                <div className="p-4 rounded-full bg-gray-100 dark:bg-white/5 mb-6">
+                  <Target className="h-8 w-8 text-gray-600 dark:text-gray-400" />
                 </div>
-                <span className="text-5xl font-black text-blue-500 mb-2">15+ Yrs</span>
+                <span className="text-5xl font-black text-gray-600 dark:text-gray-400 mb-2">15+ Yrs</span>
                 <span className="text-xs text-gray-500 font-bold uppercase tracking-widest">Domain Experience</span>
                 <p className="text-sm text-gray-600 dark:text-gray-400 mt-4">Decades of combined veteran experience defending critical infrastructure.</p>
               </div>
@@ -89,7 +89,7 @@ export const WhyUs = () => {
         {/* Performance SLA Section */}
         <div id="sla" className="scroll-mt-32">
           <div className="flex items-center gap-4 mb-10 border-b border-gray-200 dark:border-white/5 pb-4">
-            <div className="p-3 rounded-2xl bg-cyan-500/10 text-cyan-500 dark:text-cyan-400">
+            <div className="p-3 rounded-2xl bg-black/5 dark:bg-white/5 text-gray-900 dark:text-white">
               <Zap className="h-8 w-8" />
             </div>
             <div>
@@ -100,7 +100,7 @@ export const WhyUs = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <ScrollReveal delay={0.1}>
-              <div className="p-8 rounded-3xl bg-white dark:bg-[#0a0e14] border border-gray-200 shadow-sm dark:shadow-none dark:border-white/5 hover:border-cyan-500/30 transition-colors h-full">
+              <div className="p-8 rounded-3xl bg-white dark:bg-[#0a0e14] border border-gray-200 shadow-sm dark:shadow-none dark:border-white/5 hover:border-black/10 dark:border-white/10 transition-colors h-full">
                 <div className="flex items-start gap-4">
                   <div className="mt-1 p-2 rounded-lg bg-red-50 dark:bg-red-500/10 text-red-500">
                     <Zap className="h-6 w-6" />
@@ -116,9 +116,9 @@ export const WhyUs = () => {
             </ScrollReveal>
 
             <ScrollReveal delay={0.2}>
-              <div className="p-8 rounded-3xl bg-white dark:bg-[#0a0e14] border border-gray-200 shadow-sm dark:shadow-none dark:border-white/5 hover:border-cyan-500/30 transition-colors h-full">
+              <div className="p-8 rounded-3xl bg-white dark:bg-[#0a0e14] border border-gray-200 shadow-sm dark:shadow-none dark:border-white/5 hover:border-black/10 dark:border-white/10 transition-colors h-full">
                 <div className="flex items-start gap-4">
-                  <div className="mt-1 p-2 rounded-lg bg-cyan-50 dark:bg-cyan-500/10 text-cyan-500">
+                  <div className="mt-1 p-2 rounded-lg bg-gray-100 dark:bg-white/5 text-gray-900 dark:text-gray-200">
                     <Lock className="h-6 w-6" />
                   </div>
                   <div>
@@ -132,9 +132,9 @@ export const WhyUs = () => {
             </ScrollReveal>
 
             <ScrollReveal delay={0.3}>
-              <div className="p-8 rounded-3xl bg-white dark:bg-[#0a0e14] border border-gray-200 shadow-sm dark:shadow-none dark:border-white/5 hover:border-cyan-500/30 transition-colors h-full">
+              <div className="p-8 rounded-3xl bg-white dark:bg-[#0a0e14] border border-gray-200 shadow-sm dark:shadow-none dark:border-white/5 hover:border-black/10 dark:border-white/10 transition-colors h-full">
                 <div className="flex items-start gap-4">
-                  <div className="mt-1 p-2 rounded-lg bg-green-50 dark:bg-green-500/10 text-green-500">
+                  <div className="mt-1 p-2 rounded-lg bg-gray-100 dark:bg-white/5 text-gray-700 dark:text-gray-300">
                     <CheckCircle className="h-6 w-6" />
                   </div>
                   <div>
@@ -148,9 +148,9 @@ export const WhyUs = () => {
             </ScrollReveal>
 
             <ScrollReveal delay={0.4}>
-              <div className="p-8 rounded-3xl bg-white dark:bg-[#0a0e14] border border-gray-200 shadow-sm dark:shadow-none dark:border-white/5 hover:border-cyan-500/30 transition-colors h-full">
+              <div className="p-8 rounded-3xl bg-white dark:bg-[#0a0e14] border border-gray-200 shadow-sm dark:shadow-none dark:border-white/5 hover:border-black/10 dark:border-white/10 transition-colors h-full">
                 <div className="flex items-start gap-4">
-                  <div className="mt-1 p-2 rounded-lg bg-blue-50 dark:bg-blue-500/10 text-blue-500">
+                  <div className="mt-1 p-2 rounded-lg bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400">
                     <Award className="h-6 w-6" />
                   </div>
                   <div>

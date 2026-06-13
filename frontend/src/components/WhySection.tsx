@@ -2,20 +2,20 @@ import { ShieldCheck, Award, Zap, Users } from "lucide-react";
 
 export const WhySection = () => {
   return (
-    <section className="py-24 bg-background border-b border-gray-200 dark:border-white/5 relative">
+    <section className="py-24 border-b border-gray-200 dark:border-white/5 relative">
       <div className="container mx-auto px-6 max-w-[1440px]">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           
           {/* Left Column */}
           <div>
-            <div className="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-[11px] font-bold uppercase tracking-wider text-cyan-400 mb-8">
+            <div className="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[11px] font-bold uppercase tracking-wider text-gray-900 dark:text-gray-200 mb-8">
               WHY NEXAVISE CONSULTING
             </div>
             
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-display text-gray-900 dark:text-white mb-8 leading-[1.1] tracking-tight">
               Enterprise <br />
               Resilience <br />
-              <span className="text-cyan-400">Simplified</span>
+              <span className="text-gray-900 dark:text-gray-200">Simplified</span>
             </h2>
             
             <p className="text-gray-600 dark:text-gray-400 text-lg mb-12 leading-relaxed">
@@ -24,7 +24,7 @@ export const WhySection = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="p-6 rounded-2xl bg-white dark:bg-[#0a0e14] border border-gray-200 shadow-sm dark:shadow-none dark:border-white/5 text-center flex flex-col items-center justify-center">
-                <span className="text-3xl font-black text-cyan-400 mb-2">500+</span>
+                <span className="text-3xl font-black text-gray-900 dark:text-gray-200 mb-2">500+</span>
                 <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">CLIENTS SECURED</span>
               </div>
               <div className="p-6 rounded-2xl bg-white dark:bg-[#0a0e14] border border-gray-200 shadow-sm dark:shadow-none dark:border-white/5 text-center flex flex-col items-center justify-center">
@@ -42,8 +42,8 @@ export const WhySection = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             {/* Card 1 */}
             <div className="p-8 rounded-3xl bg-white dark:bg-[#0a0e14] border border-gray-200 shadow-sm dark:shadow-none dark:border-white/5 hover:border-gray-300 dark:hover:border-white/10 transition-colors">
-              <div className="h-12 w-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-6">
-                <ShieldCheck className="h-6 w-6 text-cyan-400" />
+              <div className="h-12 w-12 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center mb-6">
+                <ShieldCheck className="h-6 w-6 text-gray-900 dark:text-gray-200" />
               </div>
               <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3">Global Compliance Excellence</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
@@ -53,8 +53,8 @@ export const WhySection = () => {
 
             {/* Card 2 */}
             <div className="p-8 rounded-3xl bg-white dark:bg-[#0a0e14] border border-gray-200 shadow-sm dark:shadow-none dark:border-white/5 hover:border-gray-300 dark:hover:border-white/10 transition-colors">
-              <div className="h-12 w-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-6">
-                <Award className="h-6 w-6 text-cyan-400" />
+              <div className="h-12 w-12 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center mb-6">
+                <Award className="h-6 w-6 text-gray-900 dark:text-gray-200" />
               </div>
               <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3">Vetted Industry Veterans</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
@@ -64,8 +64,8 @@ export const WhySection = () => {
 
             {/* Card 3 */}
             <div className="p-8 rounded-3xl bg-white dark:bg-[#0a0e14] border border-gray-200 shadow-sm dark:shadow-none dark:border-white/5 hover:border-gray-300 dark:hover:border-white/10 transition-colors">
-              <div className="h-12 w-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-6">
-                <Zap className="h-6 w-6 text-cyan-400" />
+              <div className="h-12 w-12 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center mb-6">
+                <Zap className="h-6 w-6 text-gray-900 dark:text-gray-200" />
               </div>
               <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3">Rapid Attack Mitigation</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
@@ -75,8 +75,8 @@ export const WhySection = () => {
 
             {/* Card 4 */}
             <div className="p-8 rounded-3xl bg-white dark:bg-[#0a0e14] border border-gray-200 shadow-sm dark:shadow-none dark:border-white/5 hover:border-gray-300 dark:hover:border-white/10 transition-colors">
-              <div className="h-12 w-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-6">
-                <Users className="h-6 w-6 text-cyan-400" />
+              <div className="h-12 w-12 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center mb-6">
+                <Users className="h-6 w-6 text-gray-900 dark:text-gray-200" />
               </div>
               <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-3">Continuous Staff Support</h3>
               <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">

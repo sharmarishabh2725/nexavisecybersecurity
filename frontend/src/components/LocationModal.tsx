@@ -63,7 +63,7 @@ export const LocationModal = () => {
           />
 
           {/* Modal Container */}
-          <div className="fixed inset-0 z-[101] pointer-events-none flex items-center justify-center p-4 sm:p-6">
+          <div className="fixed inset-0 z-[101] pointer-events-none flex items-center justify-center p-4 sm:p-6" style={{ zoom: 'var(--a11y-scale, 1)' } as React.CSSProperties}>
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -74,7 +74,7 @@ export const LocationModal = () => {
               {/* Header */}
               <div className="flex items-center justify-between p-6 border-b border-black/5 dark:border-white/5">
                 <div className="flex items-center gap-3 text-gray-900 dark:text-white">
-                  <div className="p-2.5 rounded-xl bg-cyan-500/10 text-cyan-500">
+                  <div className="p-2.5 rounded-xl bg-black/5 dark:bg-white/5 text-gray-900 dark:text-gray-200">
                     <MapPin className="h-5 w-5" />
                   </div>
                   <div>
@@ -100,14 +100,14 @@ export const LocationModal = () => {
                     placeholder="Search for a city or state..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full bg-black/5 dark:bg-white/5 border border-transparent focus:border-cyan-500/50 rounded-2xl py-3.5 pl-12 pr-4 text-sm text-gray-900 dark:text-white outline-none transition-all placeholder:text-gray-500"
+                    className="w-full bg-black/5 dark:bg-white/5 border border-transparent focus:border-black/10 dark:border-white/10 rounded-2xl py-3.5 pl-12 pr-4 text-sm text-gray-900 dark:text-white outline-none transition-all placeholder:text-gray-500"
                   />
                 </div>
 
                 <button 
                   onClick={handleAutoDetect}
                   disabled={isDetecting}
-                  className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 text-sm font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl bg-black/5 dark:bg-white/5 hover:bg-black/5 dark:bg-white/5 text-gray-900 dark:text-white text-sm font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isDetecting ? (
                     <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: "linear" }}>
@@ -132,18 +132,18 @@ export const LocationModal = () => {
                           onClick={() => handleSelect(loc)}
                           className={`flex items-center justify-between p-4 rounded-2xl border text-left transition-all ${
                             isActive 
-                              ? 'border-cyan-500 bg-cyan-500/5 shadow-[0_0_15px_rgba(34,211,238,0.1)]' 
+                              ? 'border-gray-200 dark:border-gray-700 bg-black/5 dark:bg-white/5 shadow-sm dark:shadow-md' 
                               : 'border-black/5 dark:border-white/5 hover:border-black/10 dark:hover:border-white/10 hover:bg-black/5 dark:hover:bg-white/5'
                           }`}
                         >
                           <div>
-                            <div className={`text-sm font-bold ${isActive ? 'text-cyan-600 dark:text-cyan-400' : 'text-gray-900 dark:text-white'}`}>
+                            <div className={`text-sm font-bold ${isActive ? 'text-gray-900 dark:text-white' : 'text-gray-900 dark:text-white'}`}>
                               {loc.name}
                             </div>
                             <div className="text-xs text-gray-500 mt-0.5">{loc.region}</div>
                           </div>
                           {isActive && (
-                            <div className="h-2 w-2 rounded-full bg-cyan-500 shadow-[0_0_8px_rgba(34,211,238,0.8)]" />
+                            <div className="h-2 w-2 rounded-full bg-gray-800 dark:bg-gray-200 shadow-sm dark:shadow-md" />
                           )}
                         </button>
                       );

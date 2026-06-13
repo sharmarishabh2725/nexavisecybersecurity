@@ -2,16 +2,16 @@ import { Shield, ArrowRight, Server, Lock } from "lucide-react";
 
 export const GatewaySection = () => {
   return (
-    <section className="relative py-24 bg-background border-y border-black/5 dark:border-white/5 overflow-hidden">
+    <section className="relative py-24 border-y border-black/5 dark:border-white/5 overflow-hidden">
       <div className="cyber-grid absolute inset-0 opacity-10 pointer-events-none" />
       
       <div className="container mx-auto px-6 relative z-10 max-w-[1440px]">
         <div className="text-center max-w-3xl mx-auto mb-20">
-          <div className="inline-flex items-center justify-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-[11px] font-bold uppercase tracking-wider text-cyan-400 mb-6">
+          <div className="inline-flex items-center justify-center gap-2 px-4 py-1.5 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[11px] font-bold uppercase tracking-wider text-gray-900 dark:text-gray-200 mb-6">
             <Server className="h-3 w-3" />
             <span>CYBERSECURITY HUB PLATFORM GATEWAY</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold font-display text-cyan-400 mb-6 tracking-tight">
+          <h2 className="text-4xl md:text-5xl font-bold font-display text-gray-900 dark:text-gray-200 mb-6 tracking-tight">
             Unified Defensive Control
           </h2>
           <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
@@ -22,10 +22,10 @@ export const GatewaySection = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Card 1 */}
           <div className="p-8 rounded-3xl bg-white dark:bg-[#0a0e14] border border-gray-200 shadow-sm dark:shadow-none dark:border-white/5 relative overflow-hidden group hover:border-gray-300 dark:hover:border-white/10 transition-colors flex flex-col h-full">
-            <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-300/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             
-            <div className="h-12 w-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-6">
-              <Shield className="h-6 w-6 text-cyan-400" />
+            <div className="h-12 w-12 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center mb-6">
+              <Shield className="h-6 w-6 text-gray-900 dark:text-gray-200" />
             </div>
             
             <h3 className="text-2xl font-bold mb-4 font-display text-gray-900 dark:text-white">53 Security Capabilities</h3>
@@ -41,10 +41,10 @@ export const GatewaySection = () => {
 
           {/* Card 2 */}
           <div className="p-8 rounded-3xl bg-white dark:bg-[#0a0e14] border border-gray-200 shadow-sm dark:shadow-none dark:border-white/5 relative overflow-hidden group hover:border-gray-300 dark:hover:border-white/10 transition-colors flex flex-col h-full">
-            <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-300/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             
-            <div className="h-12 w-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-6">
-              <Server className="h-6 w-6 text-cyan-400" />
+            <div className="h-12 w-12 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center mb-6">
+              <Server className="h-6 w-6 text-gray-900 dark:text-gray-200" />
             </div>
             
             <h3 className="text-2xl font-bold mb-4 font-display text-gray-900 dark:text-white">Managed Threat Center</h3>
@@ -60,10 +60,10 @@ export const GatewaySection = () => {
 
           {/* Card 3 */}
           <div className="p-8 rounded-3xl bg-white dark:bg-[#0a0e14] border border-gray-200 shadow-sm dark:shadow-none dark:border-white/5 relative overflow-hidden group hover:border-gray-300 dark:hover:border-white/10 transition-colors flex flex-col h-full">
-            <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-300/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
             
-            <div className="h-12 w-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center mb-6">
-              <Lock className="h-6 w-6 text-cyan-400" />
+            <div className="h-12 w-12 rounded-xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center mb-6">
+              <Lock className="h-6 w-6 text-gray-900 dark:text-gray-200" />
             </div>
             
             <h3 className="text-2xl font-bold mb-4 font-display text-gray-900 dark:text-white">AI Privacy Orchestrator</h3>

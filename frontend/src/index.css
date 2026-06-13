@@ -6,19 +6,19 @@
 
 @layer base {
   :root {
-    --background: 210 20% 95%; /* Light gray to contrast perfectly with white cards */
-    --foreground: 220 20% 3%;
-    --card: 0 0% 100%; /* White cards for contrast */
-    --primary: 185 100% 45%;
-    --cyber-grid: 210 20% 90%;
+    --background: 0 0% 98%; 
+    --foreground: 0 0% 5%;
+    --card: 0 0% 100%; 
+    --primary: 0 0% 10%;
+    --cyber-grid: 0 0% 90%;
   }
 
   .dark {
-    --background: 220 20% 3%;
-    --foreground: 210 40% 96%;
-    --card: 220 18% 5%;
-    --primary: 185 100% 45%;
-    --cyber-grid: 220 12% 10%;
+    --background: 0 0% 2%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 6%;
+    --primary: 0 0% 95%;
+    --cyber-grid: 0 0% 15%;
   }
   
   html {
@@ -43,7 +43,7 @@
 
 @layer utilities {
   .text-gradient {
-    @apply bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-gray-400 to-white bg-clip-text text-transparent;
   }
 
   .cyber-grid {
@@ -61,7 +61,7 @@
   }
 
   .orb-blue {
-    background: radial-gradient(circle, hsl(185 100% 45% / 0.35), transparent 70%);
+    background: radial-gradient(circle, hsl(0 0% 50% / 0.15), transparent 70%);
   }
 
   /* Custom Cyber Scrollbar */
@@ -71,16 +71,14 @@
   }
   
   .custom-scrollbar::-webkit-scrollbar-track {
-    background: rgba(10, 14, 20, 0.5);
-    border-radius: 8px;
+    @apply bg-black/5 dark:bg-white/5 rounded-lg;
   }
   
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(34, 211, 238, 0.2);
-    border-radius: 8px;
+    @apply bg-black/10 dark:bg-white/20 rounded-lg;
   }
   
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgba(34, 211, 238, 0.5);
+    @apply bg-black/20 dark:bg-white/30;
   }
 }

@@ -7,10 +7,10 @@ import {
   Building2, Landmark, HeartPulse, Cpu, Plane, ShoppingCart
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { groupedServices } from "../lib/services-data";
 import { useTheme } from "../contexts/ThemeContext";
 import { useLocation } from "../contexts/LocationContext";
 import { useAuth } from "../contexts/AuthContext";
+import { useData } from "../contexts/DataContext";
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,6 +19,7 @@ export const Navbar = () => {
   const { theme, toggleTheme } = useTheme();
   const { currentLocation, setIsModalOpen } = useLocation();
   const { user, signOut } = useAuth();
+  const { sectorsData, groupedServices } = useData();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,12 +48,12 @@ export const Navbar = () => {
             }
 
             return (
-              <Link key={category} to={`/services#${category.toLowerCase()}`} onClick={() => setActiveDropdown(null)} className="flex items-start gap-3.5 group">
-                <div className="p-2 rounded-lg bg-cyan-500/5 border border-cyan-500/10 text-cyan-400 group-hover:bg-cyan-500/15 transition-all">
+              <Link key={category} to={`/services/category/${category.toLowerCase()}`} onClick={() => setActiveDropdown(null)} className="flex items-start gap-3.5 group">
+                <div className="p-2 rounded-lg bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-gray-900 dark:text-gray-200 group-hover:bg-black/5 dark:bg-white/5 transition-all">
                   <Icon className="h-4.5 w-4.5" />
                 </div>
                 <div>
-                  <h5 className="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wide group-hover:text-cyan-400 transition-colors">{category}</h5>
+                  <h5 className="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wide group-hover:text-gray-900 dark:text-gray-200 transition-colors">{category}</h5>
                   <p className="text-[10px] text-gray-600 dark:text-gray-400 mt-0.5 leading-normal">{desc}</p>
                 </div>
               </Link>
@@ -68,21 +69,21 @@ export const Navbar = () => {
       dropdown: (
         <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-80 bg-white dark:bg-[#0a0e14] border border-black/10 dark:border-white/10 rounded-3xl p-5 shadow-2xl backdrop-blur-xl space-y-4 z-50 mt-2">
           <Link to="/why-us#metrics" onClick={() => setActiveDropdown(null)} className="flex items-start gap-3.5 group">
-            <div className="p-2 rounded-lg bg-cyan-500/5 border border-cyan-500/10 text-cyan-400 group-hover:bg-cyan-500/15 transition-all">
+            <div className="p-2 rounded-lg bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-gray-900 dark:text-gray-200 group-hover:bg-black/5 dark:bg-white/5 transition-all">
               <Award className="h-4.5 w-4.5" />
             </div>
             <div>
-              <h5 className="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wide group-hover:text-cyan-400 transition-colors">Resilience Metrics</h5>
+              <h5 className="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wide group-hover:text-gray-900 dark:text-gray-200 transition-colors">Resilience Metrics</h5>
               <p className="text-[10px] text-gray-600 dark:text-gray-400 mt-0.5 leading-normal">SLA benchmarks: 500+ clients, 99.98% block rate, 15+ years experience.</p>
             </div>
           </Link>
 
           <Link to="/why-us#sla" onClick={() => setActiveDropdown(null)} className="flex items-start gap-3.5 group">
-            <div className="p-2 rounded-lg bg-cyan-500/5 border border-cyan-500/10 text-cyan-400 group-hover:bg-cyan-500/15 transition-all">
+            <div className="p-2 rounded-lg bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-gray-900 dark:text-gray-200 group-hover:bg-black/5 dark:bg-white/5 transition-all">
               <Zap className="h-4.5 w-4.5" />
             </div>
             <div>
-              <h5 className="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wide group-hover:text-cyan-400 transition-colors">Performance SLA</h5>
+              <h5 className="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wide group-hover:text-gray-900 dark:text-gray-200 transition-colors">Performance SLA</h5>
               <p className="text-[10px] text-gray-600 dark:text-gray-400 mt-0.5 leading-normal">Emergency trigger response in 15 minutes, standard scoping in 4 hours.</p>
             </div>
           </Link>
@@ -94,23 +95,16 @@ export const Navbar = () => {
       href: "/sectors",
       dropdown: (
         <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-80 bg-white dark:bg-[#0a0e14] border border-black/10 dark:border-white/10 rounded-3xl p-5 shadow-2xl backdrop-blur-xl space-y-4 z-50 mt-2">
-          {[
-            { id: "finance", name: "Finance", icon: Landmark, desc: "Protecting critical financial infrastructure" },
-            { id: "healthcare", name: "Healthcare", icon: HeartPulse, desc: "Securing patient data & HIPAA compliance" },
-            { id: "technology", name: "Technology", icon: Cpu, desc: "Securing IP and software supply chains" },
-            { id: "government", name: "Government", icon: Building2, desc: "Defending public sector networks" },
-            { id: "aerospace", name: "Aerospace", icon: Plane, desc: "Military-grade cybersecurity" },
-            { id: "retail", name: "Retail", icon: ShoppingCart, desc: "Protecting consumer data & retail" },
-          ].map((sector) => {
-            const Icon = sector.icon;
+          {sectorsData.map((sector) => {
+            const Icon = (Icons as any)[sector.icon] || Icons.Shield;
             return (
               <Link key={sector.id} to={`/sectors/${sector.id}`} onClick={() => setActiveDropdown(null)} className="flex items-start gap-3.5 group">
-                <div className="p-2 rounded-lg bg-cyan-500/5 border border-cyan-500/10 text-cyan-400 group-hover:bg-cyan-500/15 transition-all">
+                <div className="p-2 rounded-lg bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-gray-900 dark:text-gray-200 group-hover:bg-black/5 dark:bg-white/5 transition-all">
                   <Icon className="h-4.5 w-4.5" />
                 </div>
                 <div>
-                  <h5 className="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wide group-hover:text-cyan-400 transition-colors">{sector.name}</h5>
-                  <p className="text-[10px] text-gray-600 dark:text-gray-400 mt-0.5 leading-normal">{sector.desc}</p>
+                  <h5 className="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wide group-hover:text-gray-900 dark:text-gray-200 transition-colors">{sector.name}</h5>
+                  <p className="text-[10px] text-gray-600 dark:text-gray-400 mt-0.5 leading-normal truncate w-48">{sector.description || sector.desc}</p>
                 </div>
               </Link>
             )
@@ -124,21 +118,21 @@ export const Navbar = () => {
       dropdown: (
         <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-80 bg-white dark:bg-[#0a0e14] border border-black/10 dark:border-white/10 rounded-3xl p-5 shadow-2xl backdrop-blur-xl space-y-4 z-50 mt-2">
           <Link to="/contact" className="flex items-start gap-3.5 group">
-            <div className="p-2 rounded-lg bg-cyan-500/5 border border-cyan-500/10 text-cyan-400 group-hover:bg-cyan-500/15 transition-all">
+            <div className="p-2 rounded-lg bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-gray-900 dark:text-gray-200 group-hover:bg-black/5 dark:bg-white/5 transition-all">
               <FileText className="h-4.5 w-4.5" />
             </div>
             <div>
-              <h5 className="text-xs font-bold text-gray-900 dark:text-white group-hover:text-cyan-400 transition-colors uppercase tracking-wide">Contact Us</h5>
+              <h5 className="text-xs font-bold text-gray-900 dark:text-white group-hover:text-gray-900 dark:text-gray-200 transition-colors uppercase tracking-wide">Contact Us</h5>
               <p className="text-[10px] text-gray-600 dark:text-gray-400 mt-0.5 leading-normal">Send a message directly to our team.</p>
             </div>
           </Link>
 
           <a href="tel:+18005550199" onClick={() => setActiveDropdown(null)} className="flex items-start gap-3.5 group">
-            <div className="p-2 rounded-lg bg-cyan-500/5 border border-cyan-500/10 text-cyan-400 group-hover:bg-cyan-500/15 transition-all">
+            <div className="p-2 rounded-lg bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-gray-900 dark:text-gray-200 group-hover:bg-black/5 dark:bg-white/5 transition-all">
               <PhoneCall className="h-4.5 w-4.5" />
             </div>
             <div>
-              <h5 className="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wide group-hover:text-cyan-400 transition-colors">SOC Emergency Line</h5>
+              <h5 className="text-xs font-bold text-gray-900 dark:text-white uppercase tracking-wide group-hover:text-gray-900 dark:text-gray-200 transition-colors">SOC Emergency Line</h5>
               <p className="text-[10px] text-gray-600 dark:text-gray-400 mt-0.5 leading-normal">Crisis hotlink dedicated to network breach isolations.</p>
             </div>
           </a>
@@ -148,16 +142,19 @@ export const Navbar = () => {
   ];
 
   return (
-    <nav className={`sticky top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled 
-        ? "bg-background/90 backdrop-blur-lg border-b border-black/10 dark:border-black/10 dark:border-white/10 shadow-lg py-0" 
-        : "bg-background/50 backdrop-blur-sm border-b border-transparent py-2"
-    }`}>
+    <nav 
+      className={`sticky top-0 z-50 transition-all duration-500 ${
+        isScrolled 
+          ? "bg-white/90 dark:bg-[#0a0e14]/90 backdrop-blur-xl border-b border-black/10 dark:border-white/10 shadow-lg py-1" 
+          : "bg-slate-100 dark:bg-[#0a0e14] backdrop-blur-sm border-b border-black/5 dark:border-white/5 py-3"
+      }`} 
+      style={{ zoom: 'var(--a11y-scale, 1)' } as React.CSSProperties}
+    >
       <div className="container mx-auto px-6 max-w-[1440px]">
         <div className="flex items-center justify-between h-20">
           
           <Link to="/" className="flex items-center cursor-pointer -ml-2">
-            <img src="/logo.png" alt="Nexavise Consulting" className="h-20 w-auto object-contain scale-[1.5] origin-left dark:invert-0 dark:hue-rotate-0 invert hue-rotate-180 transition-all duration-300" />
+            <img src="/logo.png" alt="Nexavise Consulting" className="h-20 w-auto object-contain scale-[2.25] origin-left dark:invert-0 dark:hue-rotate-0 invert hue-rotate-180 transition-all duration-300" />
           </Link>
           
           <div className="hidden lg:flex items-center gap-8 h-full">
@@ -209,11 +206,11 @@ export const Navbar = () => {
             >
               {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
             </button>
-            {user ? (
+            {user && (
               <div className="relative group cursor-pointer">
-                <div className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-cyan-400/10 border border-cyan-400/20 text-cyan-600 dark:text-cyan-400 font-bold text-[13px] tracking-wide hover:bg-cyan-400/20 transition-colors">
-                  <Icons.User className="h-4 w-4" />
-                  Hi, {user.user_metadata?.full_name?.split(' ')[0] || 'User'} <ChevronDown className="h-3 w-3 ml-1 opacity-50 group-hover:opacity-100 transition-opacity" />
+                <div className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-600 dark:text-cyan-400 font-bold text-[13px] tracking-wide hover:bg-cyan-500/20 transition-colors">
+                  <Icons.ShieldAlert className="h-4 w-4" />
+                  Hi, Admin <ChevronDown className="h-3 w-3 ml-1 opacity-50 group-hover:opacity-100 transition-opacity" />
                 </div>
                 <div className="absolute top-full right-0 pt-2 w-48 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all pointer-events-none group-hover:pointer-events-auto">
                   <div className="bg-white dark:bg-[#0a0e14] border border-black/10 dark:border-white/10 rounded-2xl shadow-xl flex flex-col py-2">
@@ -221,6 +218,10 @@ export const Navbar = () => {
                       <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Signed in as</p>
                       <p className="text-xs text-gray-900 dark:text-white truncate">{user.email}</p>
                     </div>
+                    <Link to="/admin" className="flex items-center gap-2 px-4 py-2 text-sm font-bold text-gray-700 dark:text-gray-300 hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+                      <Icons.LayoutDashboard className="h-4 w-4" />
+                      Dashboard
+                    </Link>
                     <button onClick={signOut} className="flex items-center gap-2 px-4 py-2 text-sm font-bold text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 text-left transition-colors">
                       <Icons.LogOut className="h-4 w-4" />
                       Sign Out
@@ -228,15 +229,16 @@ export const Navbar = () => {
                   </div>
                 </div>
               </div>
-            ) : (
-              <>
-                <Link to="/login" className="px-6 py-2.5 rounded-full bg-transparent text-gray-800 dark:text-gray-900 dark:text-white font-bold text-[13px] tracking-wide border border-black/10 dark:border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-black/5 dark:bg-white/5 transition-colors">
-                  LOG IN
-                </Link>
-                <Link to="/contact" className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-cyan-400 text-black font-bold text-[13px] tracking-wide hover:bg-cyan-300 transition-colors">
-                  GET A DEMO <ArrowRight className="h-4 w-4" />
-                </Link>
-              </>
+            )}
+            
+            {!user && (
+              <Link 
+                to="/login"
+                className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/5 text-gray-400 hover:text-cyan-500 transition-colors"
+                title="Admin Portal"
+              >
+                <Icons.Lock className="h-4.5 w-4.5" />
+              </Link>
             )}
           </div>
 
@@ -283,10 +285,11 @@ export const Navbar = () => {
                 <div className="space-y-4 pt-4 border-t border-black/5 dark:border-white/5">
                   <h3 className="text-xs font-bold text-gray-500 uppercase tracking-widest">Sectors</h3>
                   <div className="space-y-3 pl-4 border-l border-black/5 dark:border-white/5">
-                    <Link to="/sectors/finance" className="block text-[11px] font-bold text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-white uppercase" onClick={() => setIsOpen(false)}>Finance</Link>
-                    <Link to="/sectors/healthcare" className="block text-[11px] font-bold text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-white uppercase" onClick={() => setIsOpen(false)}>Healthcare</Link>
-                    <Link to="/sectors/technology" className="block text-[11px] font-bold text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-white uppercase" onClick={() => setIsOpen(false)}>Technology</Link>
-                    <Link to="/sectors/government" className="block text-[11px] font-bold text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-white uppercase" onClick={() => setIsOpen(false)}>Government</Link>
+                    {sectorsData.map(sector => (
+                      <Link key={sector.id} to={`/sectors/${sector.id}`} className="block text-[11px] font-bold text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-white uppercase" onClick={() => setIsOpen(false)}>
+                        {sector.name}
+                      </Link>
+                    ))}
                   </div>
                 </div>
 
@@ -306,19 +309,20 @@ export const Navbar = () => {
                 >
                   <Icons.MapPin className="h-4 w-4" /> {currentLocation.name}
                 </button>
-                {user ? (
-                  <button onClick={() => { signOut(); setIsOpen(false); }} className="flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-red-500/10 text-red-500 font-bold text-[13px] tracking-wide w-full hover:bg-red-500/20 transition-colors">
-                    <Icons.LogOut className="h-4 w-4" /> SIGN OUT
-                  </button>
-                ) : (
-                  <>
-                    <Link to="/login" onClick={() => setIsOpen(false)} className="block px-6 py-3 rounded-full bg-transparent text-gray-900 dark:text-white font-bold text-[13px] tracking-wide border border-black/10 dark:border-white/10 w-full text-center">
-                      LOG IN
+                {user && (
+                  <div className="flex flex-col gap-2">
+                    <Link to="/admin" onClick={() => setIsOpen(false)} className="flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 font-bold text-[13px] tracking-wide w-full hover:bg-cyan-500/20 transition-colors">
+                      <Icons.LayoutDashboard className="h-4 w-4" /> ADMIN DASHBOARD
                     </Link>
-                    <Link to="/contact" onClick={() => setIsOpen(false)} className="flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-cyan-400 text-black font-bold text-[13px] tracking-wide w-full">
-                      GET A DEMO <ArrowRight className="h-4 w-4" />
-                    </Link>
-                  </>
+                    <button onClick={() => { signOut(); setIsOpen(false); }} className="flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-red-500/10 text-red-500 font-bold text-[13px] tracking-wide w-full hover:bg-red-500/20 transition-colors">
+                      <Icons.LogOut className="h-4 w-4" /> SIGN OUT
+                    </button>
+                  </div>
+                )}
+                {!user && (
+                  <Link to="/login" onClick={() => setIsOpen(false)} className="flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-black/5 dark:bg-white/5 text-gray-600 dark:text-gray-400 font-bold text-[13px] tracking-wide w-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors">
+                    <Icons.Lock className="h-4 w-4" /> ADMIN LOGIN
+                  </Link>
                 )}
               </div>
 

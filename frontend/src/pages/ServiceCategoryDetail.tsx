@@ -1,46 +1,41 @@
-import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import * as Icons from "lucide-react";
-import { useData } from "../contexts/DataContext";
-import { useAuth } from "../contexts/AuthContext";
+import { useState } from "react";
+import { useParams, Link, Navigate } from "react-router-dom";
+import { ArrowLeft, ArrowRight, ShieldCheck } from "lucide-react";
 import { ScrollReveal } from "../components/ScrollReveal";
 import DecryptedText from "../components/DecryptedText";
+import { useData } from "../contexts/DataContext";
+import { useAuth } from "../contexts/AuthContext";
+import * as Icons from "lucide-react";
 
-export const Services = () => {
-  const location = useLocation();
-  const { serviceCategories, refreshData, loading } = useData();
+export const ServiceCategoryDetail = () => {
+  const { categoryId } = useParams();
+  const { serviceCategories, groupedServices, refreshData, loading } = useData();
   const { user, token } = useAuth();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [newCategory, setNewCategory] = useState({ id: '', name: '', description: '' });
+  const [newService, setNewService] = useState({ name: '', description: '' });
 
-  useEffect(() => {
-    if (location.hash) {
-      const element = document.getElementById(location.hash.substring(1));
-      if (element) {
-        setTimeout(() => {
-          element.scrollIntoView({ behavior: "smooth" });
-        }, 100);
-      }
-    } else {
-      window.scrollTo(0, 0);
-    }
-  }, [location]);
+  if (loading) return <div className="min-h-screen bg-white dark:bg-[#0a0e14] pt-32"></div>;
 
-  if (loading) return <div className="min-h-screen pt-32"></div>;
+  const categoryData = serviceCategories.find(c => c.id === categoryId);
+  const services = groupedServices[categoryData?.name] || [];
 
-  const handleAddCategory = async (e: React.FormEvent) => {
+  if (!categoryData) {
+    return <Navigate to="/services" replace />;
+  }
+
+  const handleAddService = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await fetch('http://localhost:3001/api/service_categories', {
+      await fetch('http://localhost:3001/api/services', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({ ...newCategory, icon: 'Shield' })
+        body: JSON.stringify({ ...newService, category_id: categoryData.id, icon: 'Shield' })
       });
-      setNewCategory({ id: '', name: '', description: '' });
+      setNewService({ name: '', description: '' });
       setIsModalOpen(false);
       refreshData();
     } catch (err) {
@@ -48,12 +43,12 @@ export const Services = () => {
     }
   };
 
-  const handleDeleteCategory = async (e: React.MouseEvent, id: string) => {
+  const handleDeleteService = async (e: React.MouseEvent, id: number) => {
     e.preventDefault();
     e.stopPropagation();
-    if (!window.confirm("Are you sure you want to delete this Main Service Category?")) return;
+    if (!window.confirm("Are you sure you want to delete this service?")) return;
     try {
-      await fetch(`http://localhost:3001/api/service_categories/${id}`, { 
+      await fetch(`http://localhost:3001/api/services/${id}`, { 
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -63,45 +58,46 @@ export const Services = () => {
     }
   };
 
+  const Icon = categoryData.icon || Icons.Shield;
 
   return (
-    <div className="pt-32 pb-20 min-h-screen transition-colors duration-300">
+    <div className="pt-32 pb-20 min-h-screen">
       <div className="container mx-auto px-6 max-w-[1440px]">
-        {/* Hero Section */}
-        <ScrollReveal className="text-center mb-24">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-6 text-gray-900 dark:text-white tracking-tight">
-            Comprehensive <br />
-            <DecryptedText 
-              text="Cybersecurity Solutions" 
-              animateOn="view" 
-              revealDirection="center" 
-              speed={100}
-              maxIterations={20}
-              parentClassName="text-transparent bg-clip-text bg-gradient-to-r from-gray-300 to-gray-500 inline-block"
-            />
-          </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
-            From strategic consulting and managed SOC to deep vulnerability assessments and compliance readiness, we secure every layer of your enterprise.
-          </p>
+        <Link to="/services" className="inline-flex items-center text-gray-900 dark:text-gray-200 hover:text-gray-900 dark:text-gray-200 mb-8 transition-colors font-bold text-sm tracking-wide">
+          <ArrowLeft className="h-4 w-4 mr-2" /> BACK TO SERVICES
+        </Link>
+        
+        <ScrollReveal className="mb-16 bg-white dark:bg-[#0a0e14] rounded-3xl p-8 md:p-12 border border-black/5 dark:border-white/5 shadow-sm dark:shadow-none relative overflow-hidden">
+          <div className="absolute top-0 right-0 p-16 opacity-10 dark:opacity-[0.07] pointer-events-none text-gray-900 dark:text-white">
+            <Icon className="w-64 h-64" />
+          </div>
+          <div className="relative z-10">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900 dark:text-white">
+              {categoryData.name} <DecryptedText text="Services" animateOn="view" revealDirection="center" speed={100} maxIterations={20} parentClassName="text-transparent bg-clip-text bg-gradient-to-r from-gray-300 to-gray-500 inline-block" />
+            </h1>
+            <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl leading-relaxed">
+              {categoryData.desc} Explore our specialized offerings tailored exactly to your requirements below.
+            </p>
+          </div>
         </ScrollReveal>
 
-        {/* Categories and Services */}
-        <div className="space-y-32">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {serviceCategories.map((category, idx) => {
-            const Icon = category.icon;
+          {services.map((service: any, idx: number) => {
+            const ServiceIcon = (Icons as any)[service.icon] || Icons.ShieldCheck;
+            
             return (
               <ScrollReveal
-                key={category.id}
-                delay={idx * 0.1}
+                key={service.id}
+                delay={idx * 0.05}
+                className="h-full"
               >
-                <Link to={`/services/category/${category.id}`} className="block h-full outline-none">
+                <Link to={`/services/category/${categoryData.id}/${service.id}`} className="block h-full outline-none">
                   <div className="relative bg-white dark:bg-[#0a0e14] border border-gray-200 dark:border-white/5 rounded-3xl overflow-hidden group h-full min-h-[16rem] shadow-md dark:shadow-sm hover:shadow-xl dark:hover:shadow-sm transition-all duration-300">
                     {user && (
                       <button 
-                        onClick={(e) => handleDeleteCategory(e, category.id)}
+                        onClick={(e) => handleDeleteService(e, service.id)}
                         className="absolute top-4 right-4 z-20 p-2 bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white rounded-lg transition-colors"
-                        title="Delete Category"
+                        title="Delete Service"
                       >
                         <Icons.Trash2 className="w-4 h-4" />
                       </button>
@@ -110,10 +106,10 @@ export const Services = () => {
                     {/* Default State */}
                     <div className="absolute inset-0 p-8 flex flex-col justify-center">
                       <div className="p-3 rounded-xl bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white w-14 h-14 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
-                        <Icon className="h-6 w-6" />
+                        <ServiceIcon className="h-6 w-6" />
                       </div>
-                      <h3 className="text-xl font-bold text-gray-900 dark:text-white leading-snug">
-                        {category.name}
+                      <h3 className="text-lg font-bold text-gray-900 dark:text-white leading-snug">
+                        {service.name}
                       </h3>
                     </div>
 
@@ -121,17 +117,17 @@ export const Services = () => {
                     <div className="absolute inset-0 bg-gradient-to-br from-slate-900/95 to-slate-800/95 dark:from-[#0a1128]/95 dark:to-[#0f172a]/95 backdrop-blur-xl text-white p-8 flex flex-col transform opacity-0 scale-95 origin-center group-hover:opacity-100 group-hover:scale-100 transition-all duration-400 ease-out z-10 shadow-2xl border border-blue-500/20">
                       <div className="flex items-center gap-3 mb-4">
                         <div className="p-2 rounded-xl bg-blue-500/20 border border-blue-500/30 text-blue-400">
-                          <Icon className="h-6 w-6" />
+                          <ServiceIcon className="h-6 w-6" />
                         </div>
                         <h3 className="text-lg font-bold leading-snug text-white">
-                          {category.name}
+                          {service.name}
                         </h3>
                       </div>
                       <p className="text-sm text-gray-300 leading-relaxed overflow-y-auto custom-scrollbar pr-2 flex-grow">
-                        {category.desc}
+                        {service.description}
                       </p>
                       <div className="mt-4 flex items-center text-sm font-bold text-blue-400 cursor-pointer group/btn">
-                        Explore Sub-Services <span className="ml-2 transform group-hover/btn:translate-x-1 transition-transform">&rarr;</span>
+                        View Details <ArrowRight className="ml-2 h-4 w-4 transform group-hover/btn:translate-x-1 transition-transform" />
                       </div>
                     </div>
                   </div>
@@ -146,15 +142,13 @@ export const Services = () => {
                   <div className="p-4 rounded-full bg-gray-200 dark:bg-white/10 mb-4">
                     <Icons.Plus className="w-8 h-8" />
                   </div>
-                  <h3 className="text-lg font-bold">Add Service Category</h3>
-                  <p className="text-sm mt-2">Create new Main Category</p>
+                  <h3 className="text-lg font-bold">Add Service</h3>
+                  <p className="text-sm mt-2">Instantly add to {categoryData.name}</p>
                 </div>
               </button>
             </ScrollReveal>
           )}
         </div>
-        </div>
-
       </div>
 
       {/* Add Service Modal */}
@@ -163,27 +157,24 @@ export const Services = () => {
           <div className="bg-white dark:bg-[#0a0e14] border border-gray-200 dark:border-white/10 rounded-3xl shadow-2xl w-full max-w-md overflow-hidden relative">
             <div className="p-6 border-b border-gray-200 dark:border-white/10 bg-gray-50 dark:bg-white/5 flex justify-between items-center">
               <div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white">Add Main Category</h3>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white">Add Sub-Service</h3>
+                <p className="text-xs text-gray-500 mt-1 uppercase tracking-widest">{categoryData.name}</p>
               </div>
               <button onClick={() => setIsModalOpen(false)} className="p-2 text-gray-500 hover:bg-gray-200 dark:hover:bg-white/10 rounded-full transition-colors">
                 <Icons.X className="w-5 h-5" />
               </button>
             </div>
-            <form onSubmit={handleAddCategory} className="p-6 space-y-4">
+            <form onSubmit={handleAddService} className="p-6 space-y-4">
               <div>
-                <label className="block text-sm font-bold text-gray-900 dark:text-gray-300 mb-2">Category ID</label>
-                <input required placeholder="e.g. consulting" value={newCategory.id} onChange={e => setNewCategory({...newCategory, id: e.target.value})} className="w-full bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" />
-              </div>
-              <div>
-                <label className="block text-sm font-bold text-gray-900 dark:text-gray-300 mb-2">Category Name</label>
-                <input required placeholder="e.g. Consulting" value={newCategory.name} onChange={e => setNewCategory({...newCategory, name: e.target.value})} className="w-full bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" />
+                <label className="block text-sm font-bold text-gray-900 dark:text-gray-300 mb-2">Service Name</label>
+                <input required placeholder="e.g. Threat Hunting" value={newService.name} onChange={e => setNewService({...newService, name: e.target.value})} className="w-full bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" />
               </div>
               <div>
                 <label className="block text-sm font-bold text-gray-900 dark:text-gray-300 mb-2">Description</label>
-                <textarea required placeholder="Detailed description of the category..." value={newCategory.description} onChange={e => setNewCategory({...newCategory, description: e.target.value})} className="w-full bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all resize-none" rows={4} />
+                <textarea placeholder="Detailed description of the service (optional)..." value={newService.description} onChange={e => setNewService({...newService, description: e.target.value})} className="w-full bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all resize-none" rows={4} />
               </div>
               <button type="submit" className="w-full flex justify-center items-center gap-2 bg-blue-500 text-white px-4 py-3 rounded-xl text-sm font-bold hover:bg-blue-400 transition-colors shadow-lg shadow-blue-500/20">
-                <Icons.Plus className="w-5 h-5" /> Create Category
+                <Icons.Plus className="w-5 h-5" /> Add to {categoryData.name}
               </button>
             </form>
           </div>
