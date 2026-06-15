@@ -56,7 +56,7 @@ export const WhatsAppWidget = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setIsOpen(false)}
-                className="flex items-center justify-center gap-2 w-full py-3 px-4 bg-[#25D366] hover:bg-[#1ebd5a] text-white rounded-xl font-bold text-sm transition-all shadow-lg shadow-[#25D366]/20 mt-2 group"
+                className="flex items-center justify-start gap-2 w-full py-3 px-4 bg-[#25D366] hover:bg-[#1ebd5a] text-white rounded-xl font-bold text-sm transition-all shadow-lg shadow-[#25D366]/20 mt-2 group"
               >
                 <Send className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 Start Chat

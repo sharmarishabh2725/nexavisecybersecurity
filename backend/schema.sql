@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS inquiries (
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
     email VARCHAR(255) NOT NULL,
+    phone VARCHAR(20),
     sector VARCHAR(100),
     service VARCHAR(100),
     message TEXT NOT NULL,
@@ -53,3 +54,19 @@ CREATE TABLE IF NOT EXISTS services (
 INSERT INTO users (email, password_hash) 
 VALUES ('admin@nexavise.com', '$2b$10$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36WQoeG6Lruj3vjPGGaOAle') 
 ON CONFLICT (email) DO NOTHING;
+
+CREATE TABLE IF NOT EXISTS company_info (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS team_members (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    role VARCHAR(255) NOT NULL,
+    bio TEXT NOT NULL,
+    image_url TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

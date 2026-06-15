@@ -6,15 +6,15 @@ export const GatewaySection = () => {
       <div className="cyber-grid absolute inset-0 opacity-10 pointer-events-none" />
       
       <div className="container mx-auto px-6 relative z-10 max-w-[1440px]">
-        <div className="text-center max-w-3xl mx-auto mb-20">
-          <div className="inline-flex items-center justify-center gap-2 px-4 py-1.5 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[11px] font-bold uppercase tracking-wider text-gray-900 dark:text-gray-200 mb-6">
+        <div className="text-left max-w-3xl mx-auto mb-20">
+          <div className="inline-flex items-center justify-start gap-2 px-4 py-1.5 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[11px] font-bold uppercase tracking-wider text-gray-900 dark:text-gray-200 mb-6">
             <Server className="h-3 w-3" />
             <span>CYBERSECURITY HUB PLATFORM GATEWAY</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold font-display text-gray-900 dark:text-gray-200 mb-6 tracking-tight">
             Unified Defensive Control
           </h2>
-          <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-600 dark:text-gray-400 text-lg max-w-2xl">
             Navigate between our dedicated security operations modules. Audit certifications, analyze telemetry logs, or sandbox privacy webhooks.
           </p>
         </div>

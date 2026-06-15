@@ -1,21 +1,25 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ShieldCheck, ArrowRight, Shield, Activity, FileText } from "lucide-react";
 import BlurText from "./BlurText";
+import { CyberGlobe } from "./CyberGlobe";
+
 export const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen flex items-center pt-24 pb-16 overflow-hidden">
-      
+      {/* 3D CyberGlobe Background - Shifted right on desktop */}
+      <div className="absolute inset-y-0 right-0 w-full lg:w-[120%] lg:-right-[35%] z-0 pointer-events-auto flex items-center justify-center">
+        <CyberGlobe />
+      </div>
+
       {/* Subtle bottom gradient for blending */}
       <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent pointer-events-none z-0" />
 
-      <div className="container mx-auto px-6 relative z-10 max-w-[1440px] pointer-events-none flex flex-col items-center text-center">
-        <div className="w-full max-w-5xl flex flex-col items-center">
-          
-          <div className="pointer-events-auto flex flex-col items-center">
-            <motion.div 
+      <div className="container mx-auto px-6 relative z-10 max-w-[1440px] pointer-events-none">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="pointer-events-auto flex flex-col items-start text-left w-full max-w-2xl">
+            <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[11px] font-bold uppercase tracking-wider text-gray-900 dark:text-gray-200 mb-8"
@@ -30,23 +34,23 @@ export const HeroSection = () => {
               delay={50}
               animateBy="words"
               direction="bottom"
-              className="font-display text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-[1.1] tracking-tight text-gray-900 dark:text-white text-center"
+              className="font-display text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-[1.1] tracking-tight text-gray-900 dark:text-white text-left"
             />
 
-            <motion.p 
+            <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-gray-600 dark:text-gray-400 text-lg max-w-3xl mb-10 leading-relaxed font-medium text-center"
+              className="text-gray-600 dark:text-gray-400 text-lg max-w-3xl mb-10 leading-relaxed font-medium text-left"
             >
               Comprehensive GRC advisory, VAPT testing, managed SOC, privacy regulations compliance, and active threat telemetry. 53 custom cyber services unified into one predictive portal.
             </motion.p>
 
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex flex-wrap items-center justify-center gap-4 mb-16"
+              className="flex flex-wrap items-center justify-start gap-4 mb-16"
             >
               <Link to="/services" className="flex items-center gap-2 px-8 py-3.5 rounded-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-bold text-[15px] hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors shadow-sm dark:shadow-md hover:scale-105 active:scale-95 duration-200">
                 Explore 53 Services <ArrowRight className="h-4 w-4" />
@@ -57,13 +61,13 @@ export const HeroSection = () => {
             </motion.div>
 
             {/* Badges */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.5 }}
               className="grid grid-cols-2 md:grid-cols-4 gap-4"
             >
-              <div className="flex flex-col items-center text-center gap-3 p-6 rounded-2xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:bg-white/10 transition-all duration-300 shadow-sm dark:shadow-lg hover:-translate-y-1">
+              <div className="flex flex-col items-start text-left gap-3 p-6 rounded-2xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:bg-white/10 transition-all duration-300 shadow-sm dark:shadow-lg hover:-translate-y-1">
                 <div className="h-12 w-12 rounded-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 flex items-center justify-center group-hover:scale-110 transition-transform">
                   <Shield className="h-6 w-6 text-gray-700 dark:text-gray-300" />
                 </div>
@@ -72,8 +76,8 @@ export const HeroSection = () => {
                   <p className="text-gray-900 dark:text-white font-bold text-sm">27001 & 27701</p>
                 </div>
               </div>
-              
-              <div className="flex flex-col items-center text-center gap-3 p-6 rounded-2xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:bg-white/10 transition-all duration-300 shadow-sm dark:shadow-lg hover:-translate-y-1">
+
+              <div className="flex flex-col items-start text-left gap-3 p-6 rounded-2xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:bg-white/10 transition-all duration-300 shadow-sm dark:shadow-lg hover:-translate-y-1">
                 <div className="h-12 w-12 rounded-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 flex items-center justify-center group-hover:scale-110 transition-transform">
                   <FileText className="h-6 w-6 text-gray-600 dark:text-gray-400" />
                 </div>
@@ -83,7 +87,7 @@ export const HeroSection = () => {
                 </div>
               </div>
 
-              <div className="flex flex-col items-center text-center gap-3 p-6 rounded-2xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:bg-white/10 transition-all duration-300 shadow-sm dark:shadow-lg hover:-translate-y-1">
+              <div className="flex flex-col items-start text-left gap-3 p-6 rounded-2xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:bg-white/10 transition-all duration-300 shadow-sm dark:shadow-lg hover:-translate-y-1">
                 <div className="h-12 w-12 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
                   <ShieldCheck className="h-6 w-6 text-gray-900 dark:text-gray-200" />
                 </div>
@@ -93,7 +97,7 @@ export const HeroSection = () => {
                 </div>
               </div>
 
-              <div className="flex flex-col items-center text-center gap-3 p-6 rounded-2xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:bg-white/10 transition-all duration-300 shadow-sm dark:shadow-lg hover:-translate-y-1">
+              <div className="flex flex-col items-start text-left gap-3 p-6 rounded-2xl bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:bg-white/10 transition-all duration-300 shadow-sm dark:shadow-lg hover:-translate-y-1">
                 <div className="h-12 w-12 rounded-full bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 flex items-center justify-center group-hover:scale-110 transition-transform">
                   <Activity className="h-6 w-6 text-gray-700 dark:text-gray-300" />
                 </div>
@@ -104,6 +108,8 @@ export const HeroSection = () => {
               </div>
             </motion.div>
           </div>
+          {/* Right column empty, globe fills the background */}
+          <div className="hidden lg:block w-full h-[800px] pointer-events-none"></div>
         </div>
       </div>
     </section>

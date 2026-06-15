@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { io } from 'socket.io-client';
 import { Mail } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 // Custom Linkedin Icon
 const LinkedinIcon = ({ className }: { className?: string }) => (
@@ -88,28 +89,28 @@ export const Footer = () => {
           <div>
             <h4 className="text-gray-900 dark:text-white font-bold text-[13px] tracking-wider uppercase mb-8">SERVICES</h4>
             <ul className="space-y-5 text-[13px] text-gray-600 dark:text-gray-400">
-              <li><a href="#" className="hover:text-gray-900 dark:text-white transition-colors">Cybersecurity Consulting</a></li>
-              <li><a href="#" className="hover:text-gray-900 dark:text-white transition-colors">Penetration Testing (VAPT)</a></li>
-              <li><a href="#" className="hover:text-gray-900 dark:text-white transition-colors">Compliance Services</a></li>
-              <li><a href="#" className="hover:text-gray-900 dark:text-white transition-colors">SOC as a Service</a></li>
-              <li><a href="#" className="hover:text-gray-900 dark:text-white transition-colors">Privacy Management</a></li>
+              <li><Link to="/services/category/consulting" className="hover:text-gray-900 dark:text-white transition-colors">Cybersecurity Consulting</Link></li>
+              <li><Link to="/services/category/vapt" className="hover:text-gray-900 dark:text-white transition-colors">Penetration Testing (VAPT)</Link></li>
+              <li><Link to="/services/category/compliance" className="hover:text-gray-900 dark:text-white transition-colors">Compliance Services</Link></li>
+              <li><Link to="/services/category/soc" className="hover:text-gray-900 dark:text-white transition-colors">SOC as a Service</Link></li>
+              <li><Link to="/services/category/infrastructure" className="hover:text-gray-900 dark:text-white transition-colors">Privacy Management</Link></li>
             </ul>
           </div>
 
           <div>
             <h4 className="text-gray-900 dark:text-white font-bold text-[13px] tracking-wider uppercase mb-8">COMPANY</h4>
             <ul className="space-y-5 text-[13px] text-gray-600 dark:text-gray-400">
-              <li><a href="#" className="hover:text-gray-900 dark:text-white transition-colors">About Us</a></li>
-              <li><a href="/login" className="hover:text-gray-900 dark:text-white transition-colors font-bold">Admin Portal</a></li>
+              <li><Link to="/about" className="hover:text-gray-900 dark:text-white transition-colors">About Us</Link></li>
+              <li><Link to="/login" className="hover:text-gray-900 dark:text-white transition-colors font-bold">Admin Portal</Link></li>
             </ul>
           </div>
 
           <div>
             <h4 className="text-gray-900 dark:text-white font-bold text-[13px] tracking-wider uppercase mb-8">LEGAL</h4>
             <ul className="space-y-5 text-[13px] text-gray-600 dark:text-gray-400">
-              <li><a href="#" className="hover:text-gray-900 dark:text-white transition-colors">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-gray-900 dark:text-white transition-colors">Terms of Service</a></li>
-              <li><a href="#" className="hover:text-gray-900 dark:text-white transition-colors">Cookie Policy</a></li>
+              <li><Link to="/privacy-policy" className="hover:text-gray-900 dark:text-white transition-colors">Privacy Policy</Link></li>
+              <li><Link to="/terms-of-service" className="hover:text-gray-900 dark:text-white transition-colors">Terms of Service</Link></li>
+              <li><Link to="/cookie-policy" className="hover:text-gray-900 dark:text-white transition-colors">Cookie Policy</Link></li>
             </ul>
           </div>
         </div>

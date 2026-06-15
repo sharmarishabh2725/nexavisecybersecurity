@@ -8,6 +8,8 @@ interface DataContextType {
   serviceCategories: any[];
   allServicesData: any[];
   groupedServices: Record<string, any[]>;
+  aboutInfo: any;
+  teamMembers: any[];
   loading: boolean;
   refreshData: () => Promise<void>;
 }
@@ -24,6 +26,8 @@ const DataContext = createContext<DataContextType>({
   serviceCategories: defaultCategories,
   allServicesData: defaultServices,
   groupedServices: defaultGrouped,
+  aboutInfo: { title: 'Our Mission & Vision', description: 'We are dedicated to providing the highest level of enterprise cybersecurity solutions globally.' },
+  teamMembers: [],
   loading: true,
   refreshData: async () => {},
 });
@@ -33,15 +37,18 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   const [serviceCategories, setServiceCategories] = useState<any[]>(defaultCategories);
   const [allServicesData, setAllServicesData] = useState<any[]>(defaultServices);
   const [groupedServices, setGroupedServices] = useState<Record<string, any[]>>(defaultGrouped);
+  const [aboutInfo, setAboutInfo] = useState<any>({ title: 'Our Mission & Vision', description: 'We are dedicated to providing the highest level of enterprise cybersecurity solutions globally.' });
+  const [teamMembers, setTeamMembers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   const refreshData = async () => {
     try {
-      const [categoriesRes, servicesRes, sectorsRes, sectorServicesRes] = await Promise.all([
+      const [categoriesRes, servicesRes, sectorsRes, sectorServicesRes, aboutRes] = await Promise.all([
         fetch('http://localhost:3001/api/service_categories').catch(() => null),
         fetch('http://localhost:3001/api/services').catch(() => null),
         fetch('http://localhost:3001/api/sectors').catch(() => null),
-        fetch('http://localhost:3001/api/sector_services').catch(() => null)
+        fetch('http://localhost:3001/api/sector_services').catch(() => null),
+        fetch('http://localhost:3001/api/about').catch(() => null)
       ]);
 
       if (categoriesRes && categoriesRes.ok && servicesRes && servicesRes.ok) {
@@ -82,6 +89,12 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
           setSectorsData(sectors);
         }
       }
+
+      if (aboutRes && aboutRes.ok) {
+        const aboutData = await aboutRes.json();
+        if (aboutData.company) setAboutInfo(aboutData.company);
+        if (aboutData.team) setTeamMembers(aboutData.team);
+      }
     } catch (e) {
       console.error("Failed to fetch live data", e);
     } finally {
@@ -94,7 +107,7 @@ export const DataProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <DataContext.Provider value={{ sectorsData, serviceCategories, allServicesData, groupedServices, loading, refreshData }}>
+    <DataContext.Provider value={{ sectorsData, serviceCategories, allServicesData, groupedServices, aboutInfo, teamMembers, loading, refreshData }}>
       {children}
     </DataContext.Provider>
   );

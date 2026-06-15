@@ -3,23 +3,28 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Cookie, CheckCircle } from 'lucide-react';
 
 export const CookieBanner = () => {
-  const [isVisible, setIsVisible] = useState(false);
   const [consentStatus, setConsentStatus] = useState<string | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const consent = localStorage.getItem('cookieConsent');
     setConsentStatus(consent);
-    // Always show a popup, small delay for better UX
-    const timer = setTimeout(() => setIsVisible(true), 1000);
     
-    let hideTimer: NodeJS.Timeout;
+    // Always show a popup, small delay for better UX
+    const timer = window.setTimeout(() => setIsVisible(true), 1000);
+    
+    let hideTimer: number;
     if (consent === 'accepted') {
-      hideTimer = setTimeout(() => setIsVisible(false), 6000); // 1s delay + 5s show
+      setConsentStatus('accepted');
+      hideTimer = window.setTimeout(() => setIsVisible(false), 3000);
+    } else if (consent === 'declined') {
+      setConsentStatus('declined');
+      hideTimer = window.setTimeout(() => setIsVisible(false), 3000);
     }
 
     return () => {
-      clearTimeout(timer);
-      if (hideTimer) clearTimeout(hideTimer);
+      window.clearTimeout(timer);
+      window.clearTimeout(hideTimer);
     };
   }, []);
 

@@ -2,7 +2,7 @@ export const CtaSection = () => {
   return (
     <section className="py-24">
       <div className="container mx-auto px-6 max-w-5xl">
-        <div className="bg-white dark:bg-[#0a0e14] border border-gray-200 dark:border-white/5 rounded-[3rem] p-16 text-center shadow-2xl">
+        <div className="bg-white dark:bg-[#0a0e14] border border-gray-200 dark:border-white/5 rounded-[3rem] p-16 text-left shadow-2xl">
           <h2 className="text-3xl md:text-4xl font-bold font-display text-gray-900 dark:text-gray-200 mb-6 tracking-tight">
             Looking for a custom project quote?
           </h2>

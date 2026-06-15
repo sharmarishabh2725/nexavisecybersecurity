@@ -8,7 +8,7 @@ export const WhySection = () => {
           
           {/* Left Column */}
           <div>
-            <div className="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[11px] font-bold uppercase tracking-wider text-gray-900 dark:text-gray-200 mb-8">
+            <div className="inline-flex items-center justify-start px-4 py-1.5 rounded-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-[11px] font-bold uppercase tracking-wider text-gray-900 dark:text-gray-200 mb-8">
               WHY NEXAVISE CONSULTING
             </div>
             
@@ -23,15 +23,15 @@ export const WhySection = () => {
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="p-6 rounded-2xl bg-white dark:bg-[#0a0e14] border border-gray-200 shadow-sm dark:shadow-none dark:border-white/5 text-center flex flex-col items-center justify-center">
+              <div className="p-6 rounded-2xl bg-white dark:bg-[#0a0e14] border border-gray-200 shadow-sm dark:shadow-none dark:border-white/5 text-left flex flex-col items-start justify-start">
                 <span className="text-3xl font-black text-gray-900 dark:text-gray-200 mb-2">500+</span>
                 <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">CLIENTS SECURED</span>
               </div>
-              <div className="p-6 rounded-2xl bg-white dark:bg-[#0a0e14] border border-gray-200 shadow-sm dark:shadow-none dark:border-white/5 text-center flex flex-col items-center justify-center">
+              <div className="p-6 rounded-2xl bg-white dark:bg-[#0a0e14] border border-gray-200 shadow-sm dark:shadow-none dark:border-white/5 text-left flex flex-col items-start justify-start">
                 <span className="text-3xl font-black text-[#b48eed] mb-2">99.98%</span>
                 <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">ATTACK BLOCKS</span>
               </div>
-              <div className="p-6 rounded-2xl bg-white dark:bg-[#0a0e14] border border-gray-200 shadow-sm dark:shadow-none dark:border-white/5 text-center flex flex-col items-center justify-center">
+              <div className="p-6 rounded-2xl bg-white dark:bg-[#0a0e14] border border-gray-200 shadow-sm dark:shadow-none dark:border-white/5 text-left flex flex-col items-start justify-start">
                 <span className="text-3xl font-black text-gray-900 dark:text-white mb-2">15+ Yrs</span>
                 <span className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">EXPERIENCE</span>
               </div>

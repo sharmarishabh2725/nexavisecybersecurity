@@ -1,5 +1,5 @@
 import { useParams, Link, Navigate } from "react-router-dom";
-import { ArrowLeft, Shield, Lock, Eye, Network, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, Shield, Lock, Eye, Network } from "lucide-react";
 import { ScrollReveal } from "../components/ScrollReveal";
 import { sectorsData } from "../lib/sectors-data";
 import DecryptedText from "../components/DecryptedText";

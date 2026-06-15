@@ -1,10 +1,9 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import * as Icons from "lucide-react";
-import { 
-  Menu, X, ChevronDown, ArrowRight,
-  Award, Zap, PhoneCall, FileText, Sun, Moon,
-  Building2, Landmark, HeartPulse, Cpu, Plane, ShoppingCart
+import {
+  Menu, X, ChevronDown,
+  Award, Zap, PhoneCall, FileText, Sun, Moon
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTheme } from "../contexts/ThemeContext";
@@ -20,6 +19,17 @@ export const Navbar = () => {
   const { currentLocation, setIsModalOpen } = useLocation();
   const { user, signOut } = useAuth();
   const { sectorsData, groupedServices } = useData();
+  const [fontSizeOffset, setFontSizeOffset] = useState(0);
+  const [isFontHovered, setIsFontHovered] = useState(false);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    root.style.setProperty('--a11y-scale', String(1 + (fontSizeOffset * 0.1)));
+  }, [fontSizeOffset]);
+
+  const handleDecreaseFont = () => setFontSizeOffset(prev => Math.max(prev - 1, -2));
+  const handleResetFont = () => setFontSizeOffset(0);
+  const handleIncreaseFont = () => setFontSizeOffset(prev => Math.min(prev + 2, 3));
 
   useEffect(() => {
     const handleScroll = () => {
@@ -91,6 +101,10 @@ export const Navbar = () => {
       ),
     },
     {
+      name: "About Us",
+      href: "/about",
+    },
+    {
       name: "Sectors",
       href: "/sectors",
       dropdown: (
@@ -142,21 +156,20 @@ export const Navbar = () => {
   ];
 
   return (
-    <nav 
-      className={`sticky top-0 z-50 transition-all duration-500 ${
-        isScrolled 
-          ? "bg-white/90 dark:bg-[#0a0e14]/90 backdrop-blur-xl border-b border-black/10 dark:border-white/10 shadow-lg py-1" 
+    <nav
+      className={`sticky top-0 z-50 transition-all duration-500 ${isScrolled
+          ? "bg-white/90 dark:bg-[#0a0e14]/90 backdrop-blur-xl border-b border-black/10 dark:border-white/10 shadow-lg py-1"
           : "bg-slate-100 dark:bg-[#0a0e14] backdrop-blur-sm border-b border-black/5 dark:border-white/5 py-3"
-      }`} 
+        }`}
       style={{ zoom: 'var(--a11y-scale, 1)' } as React.CSSProperties}
     >
       <div className="container mx-auto px-6 max-w-[1440px]">
         <div className="flex items-center justify-between h-20">
-          
+
           <Link to="/" className="flex items-center cursor-pointer -ml-2">
             <img src="/logo.png" alt="Nexavise Consulting" className="h-20 w-auto object-contain scale-[2.25] origin-left dark:invert-0 dark:hue-rotate-0 invert hue-rotate-180 transition-all duration-300" />
           </Link>
-          
+
           <div className="hidden lg:flex items-center gap-8 h-full">
             {navLinks.map((link) => (
               <div
@@ -193,19 +206,20 @@ export const Navbar = () => {
           </div>
 
           <div className="hidden lg:flex items-center gap-4">
-            <button 
+            <button
               onClick={() => setIsModalOpen(true)}
               className="flex items-center gap-1.5 p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/5 text-gray-600 dark:text-gray-300 transition-colors"
             >
               <Icons.MapPin className="h-4.5 w-4.5" />
               <span className="text-[11px] font-bold uppercase tracking-wider">{currentLocation.code}</span>
             </button>
-            <button 
+            <button
               onClick={toggleTheme}
-              className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-black/5 dark:bg-white/5 text-gray-600 dark:text-gray-700 dark:text-gray-300 transition-colors"
+              className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/5 text-gray-600 dark:text-gray-300 transition-colors"
             >
               {theme === 'light' ? <Moon className="h-5 w-5" /> : <Sun className="h-5 w-5" />}
             </button>
+
             {user && (
               <div className="relative group cursor-pointer">
                 <div className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-600 dark:text-cyan-400 font-bold text-[13px] tracking-wide hover:bg-cyan-500/20 transition-colors">
@@ -230,9 +244,9 @@ export const Navbar = () => {
                 </div>
               </div>
             )}
-            
+
             {!user && (
-              <Link 
+              <Link
                 to="/login"
                 className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/5 text-gray-400 hover:text-cyan-500 transition-colors"
                 title="Admin Portal"
@@ -240,6 +254,7 @@ export const Navbar = () => {
                 <Icons.Lock className="h-4.5 w-4.5" />
               </Link>
             )}
+
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -252,6 +267,51 @@ export const Navbar = () => {
         </div>
       </div>
 
+      {/* Font Size Adjuster (Fixed to Right Edge of Navbar) */}
+      <div
+        className="hidden lg:flex absolute right-0 top-1/2 -translate-y-1/2 items-center bg-[#0a0e14] border border-r-0 border-black/10 dark:border-white/10 shadow-2xl rounded-l-2xl overflow-hidden h-10"
+        onMouseEnter={() => setIsFontHovered(true)}
+        onMouseLeave={() => setIsFontHovered(false)}
+      >
+        <AnimatePresence>
+          {isFontHovered && (
+            <motion.div
+              initial={{ width: 0, opacity: 0 }}
+              animate={{ width: 'auto', opacity: 1 }}
+              exit={{ width: 0, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="flex items-center overflow-hidden whitespace-nowrap pl-2 space-x-1 bg-[#0a0e14]"
+            >
+              <button
+                onClick={handleDecreaseFont}
+                aria-label="Decrease Font Size"
+                className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-[10px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${fontSizeOffset < 0 ? 'bg-white/10 text-cyan-400' : 'hover:bg-white/5 text-gray-400'}`}
+              >
+                A-
+              </button>
+              <button
+                onClick={handleResetFont}
+                aria-label="Reset Font Size"
+                className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${fontSizeOffset === 0 ? 'bg-white/10 text-cyan-400' : 'hover:bg-white/5 text-gray-400'}`}
+              >
+                A
+              </button>
+              <button
+                onClick={handleIncreaseFont}
+                aria-label="Increase Font Size"
+                className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-[14px] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${fontSizeOffset > 0 ? 'bg-white/10 text-cyan-400' : 'hover:bg-white/5 text-gray-400'}`}
+              >
+                A+
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <div className="w-10 h-10 flex items-center justify-center font-bold text-sm text-white cursor-pointer bg-[#0a0e14]">
+          Aa
+        </div>
+      </div>
+
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -261,7 +321,7 @@ export const Navbar = () => {
             className="lg:hidden absolute top-full left-0 right-0 bg-white dark:bg-[#0a0e14]/95 backdrop-blur-xl border-t border-black/10 dark:border-white/10 overflow-y-auto shadow-2xl max-h-[calc(100vh-80px)] custom-scrollbar"
           >
             <div className="px-6 py-8 flex flex-col gap-6 pb-24">
-              
+
               <div className="flex flex-col gap-6">
                 <div className="space-y-4">
                   <h3 className="text-xs font-bold text-gray-500 uppercase tracking-widest">Services</h3>
@@ -279,6 +339,13 @@ export const Navbar = () => {
                   <div className="space-y-3 pl-4 border-l border-black/5 dark:border-white/5">
                     <Link to="/why-us#metrics" className="block text-[11px] font-bold text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-white uppercase" onClick={() => setIsOpen(false)}>Resilience Metrics</Link>
                     <Link to="/why-us#sla" className="block text-[11px] font-bold text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-white uppercase" onClick={() => setIsOpen(false)}>Performance SLA</Link>
+                  </div>
+                </div>
+
+                <div className="space-y-4 pt-4 border-t border-black/5 dark:border-white/5">
+                  <h3 className="text-xs font-bold text-gray-500 uppercase tracking-widest">Company</h3>
+                  <div className="space-y-3 pl-4 border-l border-black/5 dark:border-white/5">
+                    <Link to="/about" className="block text-[11px] font-bold text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:text-white uppercase" onClick={() => setIsOpen(false)}>About Us</Link>
                   </div>
                 </div>
 
@@ -305,22 +372,22 @@ export const Navbar = () => {
               <div className="flex flex-col gap-4 mt-6 pt-6 border-t border-black/10 dark:border-white/10">
                 <button
                   onClick={() => setIsModalOpen(true)}
-                  className="flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-black/5 dark:bg-white/5 text-gray-900 dark:text-white font-bold text-[13px] tracking-wide w-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
+                  className="flex items-center justify-start gap-2 px-6 py-3 rounded-full bg-black/5 dark:bg-white/5 text-gray-900 dark:text-white font-bold text-[13px] tracking-wide w-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
                 >
                   <Icons.MapPin className="h-4 w-4" /> {currentLocation.name}
                 </button>
                 {user && (
                   <div className="flex flex-col gap-2">
-                    <Link to="/admin" onClick={() => setIsOpen(false)} className="flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 font-bold text-[13px] tracking-wide w-full hover:bg-cyan-500/20 transition-colors">
+                    <Link to="/admin" onClick={() => setIsOpen(false)} className="flex items-center justify-start gap-2 px-6 py-3 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 font-bold text-[13px] tracking-wide w-full hover:bg-cyan-500/20 transition-colors">
                       <Icons.LayoutDashboard className="h-4 w-4" /> ADMIN DASHBOARD
                     </Link>
-                    <button onClick={() => { signOut(); setIsOpen(false); }} className="flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-red-500/10 text-red-500 font-bold text-[13px] tracking-wide w-full hover:bg-red-500/20 transition-colors">
+                    <button onClick={() => { signOut(); setIsOpen(false); }} className="flex items-center justify-start gap-2 px-6 py-3 rounded-full bg-red-500/10 text-red-500 font-bold text-[13px] tracking-wide w-full hover:bg-red-500/20 transition-colors">
                       <Icons.LogOut className="h-4 w-4" /> SIGN OUT
                     </button>
                   </div>
                 )}
                 {!user && (
-                  <Link to="/login" onClick={() => setIsOpen(false)} className="flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-black/5 dark:bg-white/5 text-gray-600 dark:text-gray-400 font-bold text-[13px] tracking-wide w-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors">
+                  <Link to="/login" onClick={() => setIsOpen(false)} className="flex items-center justify-start gap-2 px-6 py-3 rounded-full bg-black/5 dark:bg-white/5 text-gray-600 dark:text-gray-400 font-bold text-[13px] tracking-wide w-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors">
                     <Icons.Lock className="h-4 w-4" /> ADMIN LOGIN
                   </Link>
                 )}

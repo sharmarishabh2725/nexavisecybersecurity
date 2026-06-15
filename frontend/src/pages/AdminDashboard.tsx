@@ -11,10 +11,16 @@ export const AdminDashboard = () => {
   const { refreshData } = useData();
   const navigate = useNavigate();
   
-  const [activeTab, setActiveTab] = useState<'analytics' | 'inquiries' | 'content'>('analytics');
+  const [activeTab, setActiveTab] = useState<'analytics' | 'inquiries' | 'content' | 'about'>('analytics');
   
   const [stats, setStats] = useState({ totalVisitors: 0, activeUsers: 0 });
   const [inquiries, setInquiries] = useState<any[]>([]);
+  
+  // About Page Data
+  const [aboutCompany, setAboutCompany] = useState({ title: '', description: '' });
+  const [teamMembers, setTeamMembers] = useState<any[]>([]);
+  const [newTeamMember, setNewTeamMember] = useState({ name: '', role: '', bio: '', image_url: '' });
+  const [isEditingCompany, setIsEditingCompany] = useState(false);
   
   // Data for Content Management
   const [sectors, setSectors] = useState<any[]>([]);
@@ -50,6 +56,9 @@ export const AdminDashboard = () => {
       fetchServiceCategories();
       fetchServices();
     }
+    if (activeTab === 'about') {
+      fetchAboutData();
+    }
   }, [activeTab]);
 
   const fetchStats = async () => {
@@ -57,6 +66,63 @@ export const AdminDashboard = () => {
       const res = await fetch('http://localhost:3001/api/stats');
       const data = await res.json();
       setStats(data);
+    } catch (e) {}
+  };
+
+  const fetchAboutData = async () => {
+    try {
+      const res = await fetch('http://localhost:3001/api/about');
+      const data = await res.json();
+      if (data.company) setAboutCompany(data.company);
+      if (data.team) setTeamMembers(data.team);
+    } catch (e) {}
+  };
+
+  const handleUpdateCompany = async () => {
+    try {
+      await fetch('http://localhost:3001/api/about/company', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify(aboutCompany)
+      });
+      setIsEditingCompany(false);
+      refreshData();
+    } catch (e) {}
+  };
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setNewTeamMember(prev => ({ ...prev, image_url: reader.result as string }));
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleAddTeamMember = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await fetch('http://localhost:3001/api/about/team', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify(newTeamMember)
+      });
+      setNewTeamMember({ name: '', role: '', bio: '', image_url: '' });
+      fetchAboutData();
+      refreshData();
+    } catch (e) {}
+  };
+
+  const handleDeleteTeamMember = async (id: number) => {
+    try {
+      await fetch(`http://localhost:3001/api/about/team/${id}`, { 
+        method: 'DELETE',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      fetchAboutData();
+      refreshData();
     } catch (e) {}
   };
 
@@ -266,6 +332,7 @@ export const AdminDashboard = () => {
               <th className="p-4 border-b border-gray-200 dark:border-white/10">Date</th>
               <th className="p-4 border-b border-gray-200 dark:border-white/10">Name</th>
               <th className="p-4 border-b border-gray-200 dark:border-white/10">Email</th>
+              <th className="p-4 border-b border-gray-200 dark:border-white/10">Phone</th>
               <th className="p-4 border-b border-gray-200 dark:border-white/10">Sector/Service</th>
               <th className="p-4 border-b border-gray-200 dark:border-white/10">Message</th>
             </tr>
@@ -273,7 +340,7 @@ export const AdminDashboard = () => {
           <tbody>
             {(!inquiries || inquiries.length === 0) ? (
               <tr>
-                <td colSpan={5} className="p-8 text-center text-gray-500">No inquiries yet.</td>
+                <td colSpan={5} className="p-8 text-left text-gray-500">No inquiries yet.</td>
               </tr>
             ) : inquiries.map((inq, i) => (
               <tr key={i} className="border-b border-gray-200 dark:border-white/5 hover:bg-gray-50 dark:hover:bg-white/5">
@@ -284,6 +351,7 @@ export const AdminDashboard = () => {
                   {inq.first_name} {inq.last_name}
                 </td>
                 <td className="p-4 text-sm text-gray-600 dark:text-gray-400">{inq.email}</td>
+                <td className="p-4 text-sm text-gray-600 dark:text-gray-400">{inq.phone || 'N/A'}</td>
                 <td className="p-4 text-xs">
                   <span className="block text-cyan-600 dark:text-cyan-400">{inq.sector || 'N/A'}</span>
                   <span className="block text-gray-500">{inq.service || 'N/A'}</span>
@@ -372,7 +440,7 @@ export const AdminDashboard = () => {
                 }} className="space-y-4">
                   <input required placeholder="Offering Name" value={newSectorService.name} onChange={e => setNewSectorService({...newSectorService, name: e.target.value})} className="w-full bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg px-4 py-2 text-sm text-gray-900 dark:text-white focus:outline-none" />
                   <textarea placeholder="Description (Optional)" value={newSectorService.description} onChange={e => setNewSectorService({...newSectorService, description: e.target.value})} className="w-full bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg px-4 py-2 text-sm text-gray-900 dark:text-white focus:outline-none resize-none" rows={3} />
-                  <button type="submit" className="w-full flex justify-center items-center gap-2 bg-blue-500 text-white px-4 py-3 rounded-lg text-sm font-bold hover:bg-blue-400 transition-colors">
+                  <button type="submit" className="w-full flex justify-start items-center gap-2 bg-blue-500 text-white px-4 py-3 rounded-lg text-sm font-bold hover:bg-blue-400 transition-colors">
                     <Plus className="w-4 h-4" /> Save Sub-Offering
                   </button>
                 </form>
@@ -380,7 +448,7 @@ export const AdminDashboard = () => {
               {sectorMode === 'manage_sub' && (
                 <div className="space-y-2">
                   {sectorServices.filter(ss => ss.sector_id === selectedSector?.id).length === 0 ? (
-                    <p className="text-center text-sm text-gray-500 mt-8">No offerings added yet.</p>
+                    <p className="text-left text-sm text-gray-500 mt-8">No offerings added yet.</p>
                   ) : (
                     sectorServices.filter(ss => ss.sector_id === selectedSector?.id).map(ss => (
                       <div key={ss.id} className="flex items-center justify-between p-4 bg-gray-50 dark:bg-white/5 rounded-xl border border-gray-200 dark:border-white/10">
@@ -469,7 +537,7 @@ export const AdminDashboard = () => {
                 }} className="space-y-4">
                   <input required placeholder="Service Name" value={newService.name} onChange={e => setNewService({...newService, name: e.target.value})} className="w-full bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg px-4 py-2 text-sm text-gray-900 dark:text-white focus:outline-none" />
                   <textarea placeholder="Description (Optional)" value={newService.description} onChange={e => setNewService({...newService, description: e.target.value})} className="w-full bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg px-4 py-2 text-sm text-gray-900 dark:text-white focus:outline-none resize-none" rows={3} />
-                  <button type="submit" className="w-full flex justify-center items-center gap-2 bg-purple-500 text-white px-4 py-3 rounded-lg text-sm font-bold hover:bg-purple-400 transition-colors">
+                  <button type="submit" className="w-full flex justify-start items-center gap-2 bg-purple-500 text-white px-4 py-3 rounded-lg text-sm font-bold hover:bg-purple-400 transition-colors">
                     <Plus className="w-4 h-4" /> Save Sub-Service
                   </button>
                 </form>
@@ -477,7 +545,7 @@ export const AdminDashboard = () => {
               {serviceMode === 'manage_sub' && (
                 <div className="space-y-2">
                   {services.filter(s => s.category_id === selectedService?.id).length === 0 ? (
-                    <p className="text-center text-sm text-gray-500 mt-8">No sub-services added yet.</p>
+                    <p className="text-left text-sm text-gray-500 mt-8">No sub-services added yet.</p>
                   ) : (
                     services.filter(s => s.category_id === selectedService?.id).map(s => (
                       <div key={s.id} className="flex items-center justify-between p-4 bg-gray-50 dark:bg-white/5 rounded-xl border border-gray-200 dark:border-white/10">
@@ -493,6 +561,92 @@ export const AdminDashboard = () => {
             </div>
           </>
         )}
+      </div>
+    </div>
+  );
+
+  const renderAboutCMS = () => (
+    <div className="space-y-8">
+      {/* Company Info */}
+      <div className="bg-white dark:bg-[#0a0e14] border border-gray-200 dark:border-white/10 rounded-2xl p-6 shadow-xl">
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
+            <Database className="w-5 h-5 text-cyan-500" /> Company Description
+          </h3>
+          <button 
+            onClick={() => {
+              if (isEditingCompany) handleUpdateCompany();
+              else setIsEditingCompany(true);
+            }}
+            className="text-xs font-bold bg-cyan-500/10 text-cyan-600 px-4 py-2 rounded-lg hover:bg-cyan-500/20"
+          >
+            {isEditingCompany ? 'Save Changes' : 'Edit Company'}
+          </button>
+        </div>
+        {isEditingCompany ? (
+          <div className="space-y-4">
+            <input 
+              type="text" 
+              value={aboutCompany.title} 
+              onChange={e => setAboutCompany({...aboutCompany, title: e.target.value})}
+              className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-cyan-500 dark:text-white"
+              placeholder="Company Title"
+            />
+            <textarea 
+              value={aboutCompany.description} 
+              onChange={e => setAboutCompany({...aboutCompany, description: e.target.value})}
+              className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-cyan-500 min-h-[120px] dark:text-white"
+              placeholder="Company Description"
+            />
+          </div>
+        ) : (
+          <div>
+            <h4 className="text-md font-bold text-gray-900 dark:text-white mb-2">{aboutCompany.title || 'No Title'}</h4>
+            <p className="text-sm text-gray-600 dark:text-gray-400">{aboutCompany.description || 'No Description'}</p>
+          </div>
+        )}
+      </div>
+
+      {/* Team Members */}
+      <div className="bg-white dark:bg-[#0a0e14] border border-gray-200 dark:border-white/10 rounded-2xl p-6 shadow-xl">
+        <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2 mb-6">
+          <Users className="w-5 h-5 text-cyan-500" /> Team Members
+        </h3>
+        
+        <form onSubmit={handleAddTeamMember} className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 bg-black/5 dark:bg-white/5 p-4 rounded-xl">
+          <input type="text" placeholder="Name" required value={newTeamMember.name} onChange={e => setNewTeamMember({...newTeamMember, name: e.target.value})} className="bg-white dark:bg-[#0a0e14] border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-cyan-500 dark:text-white" />
+          <input type="text" placeholder="Role" required value={newTeamMember.role} onChange={e => setNewTeamMember({...newTeamMember, role: e.target.value})} className="bg-white dark:bg-[#0a0e14] border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-cyan-500 dark:text-white" />
+          
+          <div className="md:col-span-2 flex flex-col md:flex-row gap-4 items-center bg-white dark:bg-[#0a0e14] border border-black/10 dark:border-white/10 rounded-xl px-4 py-2">
+            <input type="text" placeholder="Image URL (optional)" value={newTeamMember.image_url} onChange={e => setNewTeamMember({...newTeamMember, image_url: e.target.value})} className="flex-1 bg-transparent text-sm focus:outline-none dark:text-white w-full py-1" />
+            <span className="text-gray-400 text-xs font-bold uppercase shrink-0">OR</span>
+            <input type="file" accept="image/*" onChange={handleImageUpload} className="text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-cyan-50 file:text-cyan-700 hover:file:bg-cyan-100 shrink-0 cursor-pointer w-full md:w-auto" />
+          </div>
+          
+          <textarea placeholder="Bio" required value={newTeamMember.bio} onChange={e => setNewTeamMember({...newTeamMember, bio: e.target.value})} className="bg-white dark:bg-[#0a0e14] border border-black/10 dark:border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-cyan-500 min-h-[80px] dark:text-white md:col-span-2" />
+          <button type="submit" className="md:col-span-2 bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition-colors">
+            <Plus className="w-4 h-4" /> Add Team Member
+          </button>
+        </form>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {teamMembers.map(member => (
+            <div key={member.id} className="p-4 border border-gray-200 dark:border-white/10 rounded-xl flex items-start justify-between gap-4">
+              <div className="flex gap-4">
+                <img src={member.image_url || 'https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=400&q=80'} alt={member.name} className="w-16 h-16 rounded-lg object-cover" />
+                <div>
+                  <h4 className="font-bold text-gray-900 dark:text-white">{member.name}</h4>
+                  <p className="text-xs text-cyan-600 dark:text-cyan-400 font-bold mb-1">{member.role}</p>
+                  <p className="text-xs text-gray-600 dark:text-gray-400 line-clamp-2">{member.bio}</p>
+                </div>
+              </div>
+              <button onClick={() => handleDeleteTeamMember(member.id)} className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-colors">
+                <Trash2 className="w-4 h-4" />
+              </button>
+            </div>
+          ))}
+          {teamMembers.length === 0 && <p className="text-sm text-gray-500 col-span-2 py-4">No team members found.</p>}
+        </div>
       </div>
     </div>
   );
@@ -543,6 +697,12 @@ export const AdminDashboard = () => {
                 >
                   <Database className="w-4 h-4" /> Content CMS
                 </button>
+                <button 
+                  onClick={() => setActiveTab('about')}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm transition-colors ${activeTab === 'about' ? 'bg-cyan-500/10 text-cyan-600 dark:text-cyan-400' : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-white/5'}`}
+                >
+                  <Users className="w-4 h-4" /> About Page CMS
+                </button>
               </nav>
             </div>
           </div>
@@ -558,6 +718,7 @@ export const AdminDashboard = () => {
               {activeTab === 'analytics' && renderAnalytics()}
               {activeTab === 'inquiries' && renderInquiries()}
               {activeTab === 'content' && renderContent()}
+              {activeTab === 'about' && renderAboutCMS()}
             </motion.div>
           </div>
 

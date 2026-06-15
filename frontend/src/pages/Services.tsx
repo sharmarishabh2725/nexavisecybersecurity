@@ -68,7 +68,7 @@ export const Services = () => {
     <div className="pt-32 pb-20 min-h-screen transition-colors duration-300">
       <div className="container mx-auto px-6 max-w-[1440px]">
         {/* Hero Section */}
-        <ScrollReveal className="text-center mb-24">
+        <ScrollReveal className="text-left mb-24">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-display mb-6 text-gray-900 dark:text-white tracking-tight">
             Comprehensive <br />
             <DecryptedText 
@@ -80,7 +80,7 @@ export const Services = () => {
               parentClassName="text-transparent bg-clip-text bg-gradient-to-r from-gray-300 to-gray-500 inline-block"
             />
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl leading-relaxed">
             From strategic consulting and managed SOC to deep vulnerability assessments and compliance readiness, we secure every layer of your enterprise.
           </p>
         </ScrollReveal>
@@ -108,7 +108,7 @@ export const Services = () => {
                     )}
                     
                     {/* Default State */}
-                    <div className="absolute inset-0 p-8 flex flex-col justify-center">
+                    <div className="absolute inset-0 p-8 flex flex-col justify-start">
                       <div className="p-3 rounded-xl bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-900 dark:text-white w-14 h-14 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
                         <Icon className="h-6 w-6" />
                       </div>
@@ -142,7 +142,7 @@ export const Services = () => {
           {user && (
             <ScrollReveal delay={0.2} className="h-full">
               <button onClick={() => setIsModalOpen(true)} className="block w-full h-full outline-none text-left">
-                <div className="relative bg-gray-50 dark:bg-white/5 border border-dashed border-gray-300 dark:border-white/20 rounded-3xl overflow-hidden hover:bg-gray-100 dark:hover:bg-white/10 hover:border-gray-400 dark:hover:border-white/40 transition-all duration-300 min-h-[16rem] flex flex-col items-center justify-center text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer">
+                <div className="relative bg-gray-50 dark:bg-white/5 border border-dashed border-gray-300 dark:border-white/20 rounded-3xl overflow-hidden hover:bg-gray-100 dark:hover:bg-white/10 hover:border-gray-400 dark:hover:border-white/40 transition-all duration-300 min-h-[16rem] flex flex-col items-center justify-center p-8 text-center text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer">
                   <div className="p-4 rounded-full bg-gray-200 dark:bg-white/10 mb-4">
                     <Icons.Plus className="w-8 h-8" />
                   </div>
@@ -182,7 +182,7 @@ export const Services = () => {
                 <label className="block text-sm font-bold text-gray-900 dark:text-gray-300 mb-2">Description</label>
                 <textarea required placeholder="Detailed description of the category..." value={newCategory.description} onChange={e => setNewCategory({...newCategory, description: e.target.value})} className="w-full bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl px-4 py-3 text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all resize-none" rows={4} />
               </div>
-              <button type="submit" className="w-full flex justify-center items-center gap-2 bg-blue-500 text-white px-4 py-3 rounded-xl text-sm font-bold hover:bg-blue-400 transition-colors shadow-lg shadow-blue-500/20">
+              <button type="submit" className="w-full flex justify-start items-center gap-2 bg-blue-500 text-white px-4 py-3 rounded-xl text-sm font-bold hover:bg-blue-400 transition-colors shadow-lg shadow-blue-500/20">
                 <Icons.Plus className="w-5 h-5" /> Create Category
               </button>
             </form>

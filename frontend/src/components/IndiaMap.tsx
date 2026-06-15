@@ -2,9 +2,12 @@ import India from "@svg-maps/india";
 import { motion } from "framer-motion";
 
 export const IndiaMap = ({ className }: { className?: string }) => {
-  // Approximate coordinates for Mumbai in this specific viewBox
-  const mumbaiX = 155; 
-  const mumbaiY = 435;
+  const activeLocations = [
+    { name: "Mumbai", x: 155, y: 435 },
+    { name: "Bangalore", x: 200, y: 560 },
+    { name: "Chhattisgarh", x: 330, y: 350 },
+    { name: "UP", x: 260, y: 220 },
+  ];
 
   return (
     <div className={`relative ${className || 'w-full max-w-[500px] mx-auto'}`}>
@@ -25,47 +28,50 @@ export const IndiaMap = ({ className }: { className?: string }) => {
           ))}
         </g>
 
-        {/* Mumbai Marker Animation */}
-        <g>
-          {/* Pulsating outer ring */}
-          <motion.circle
-            cx={mumbaiX}
-            cy={mumbaiY}
-            r="12"
-            fill="currentColor"
-            className="text-gray-900 dark:text-gray-200/40 dark:text-white/20"
-            animate={{ scale: [1, 2.5, 1], opacity: [0.5, 0, 0.5] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          />
-          {/* Inner dot */}
-          <circle
-            cx={mumbaiX}
-            cy={mumbaiY}
-            r="4"
-            className="fill-gray-900 dark:fill-white"
-          />
-          {/* Label */}
-          <text 
-            x={mumbaiX + 15} 
-            y={mumbaiY + 5} 
-            className="fill-gray-900 dark:fill-white text-[18px] font-bold font-display uppercase tracking-widest drop-shadow-sm"
-          >
-            Mumbai
-          </text>
-          
-          <path 
-            d={`M${mumbaiX+12},${mumbaiY} L${mumbaiX+30},${mumbaiY-20} L${mumbaiX+120},${mumbaiY-20}`}
-            fill="none"
-            className="stroke-gray-900 dark:stroke-white stroke-[2]"
-          />
-          <text
-            x={mumbaiX + 125}
-            y={mumbaiY - 25}
-            className="fill-gray-900 dark:fill-white text-[12px] font-bold font-mono tracking-wider"
-          >
-            HQ // ACTIVE
-          </text>
-        </g>
+        {/* Service Locations Markers */}
+        {activeLocations.map((loc, i) => (
+          <g key={i}>
+            {/* Pulsating outer ring */}
+            <motion.circle
+              cx={loc.x}
+              cy={loc.y}
+              r="10"
+              fill="currentColor"
+              className="text-cyan-500/40 dark:text-cyan-400/30"
+              animate={{ scale: [1, 2.5, 1], opacity: [0.6, 0, 0.6] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: i * 0.3 }}
+            />
+            {/* Inner dot */}
+            <circle
+              cx={loc.x}
+              cy={loc.y}
+              r="4"
+              className="fill-cyan-600 dark:fill-cyan-400"
+            />
+            {/* Label */}
+            <text 
+              x={loc.x + 15} 
+              y={loc.y + 5} 
+              className="fill-gray-900 dark:fill-white text-[14px] font-bold font-display uppercase tracking-widest drop-shadow-sm"
+            >
+              {loc.name}
+            </text>
+            
+            {/* Indicator Line */}
+            <path 
+              d={`M${loc.x+12},${loc.y} L${loc.x+25},${loc.y-15} L${loc.x+85},${loc.y-15}`}
+              fill="none"
+              className="stroke-gray-400 dark:stroke-white/50 stroke-[1]"
+            />
+            <text
+              x={loc.x + 90}
+              y={loc.y - 13}
+              className="fill-gray-500 dark:fill-white/70 text-[9px] font-bold font-mono tracking-wider"
+            >
+              ACTIVE
+            </text>
+          </g>
+        ))}
       </svg>
     </div>
   );

@@ -13,6 +13,8 @@ import { ServiceCategoryDetail } from "./pages/ServiceCategoryDetail";
 import { WhyUs } from "./pages/WhyUs";
 import { AdminDashboard } from "./pages/AdminDashboard";
 import { Login } from "./pages/Login";
+import { AboutUs } from "./pages/AboutUs";
+import { LegalPolicy } from "./pages/LegalPolicy";
 import { Helmet } from 'react-helmet-async';
 import { CustomCursor } from "./components/CustomCursor";
 import { ThemeProvider } from "./contexts/ThemeContext";
@@ -21,7 +23,6 @@ import { LocationModal } from "./components/LocationModal";
 import { CookieBanner } from "./components/CookieBanner";
 import { AuthProvider } from "./contexts/AuthContext";
 import { DataProvider } from "./contexts/DataContext";
-import { HexShield } from "./components/HexShield";
 
 
 function App() {
@@ -30,7 +31,6 @@ function App() {
       <LocationProvider>
         <AuthProvider>
           <DataProvider>
-            <HexShield />
             <div className="min-h-screen text-foreground flex flex-col justify-between overflow-x-hidden selection:bg-cyan-500/30 transition-colors duration-300">
               <Helmet>
                 <title>Nexavise | Enterprise Cybersecurity Hub</title>
@@ -48,12 +48,16 @@ function App() {
                   <Route path="/services/category/:categoryId" element={<ServiceCategoryDetail />} />
                   <Route path="/services/category/:categoryId/:serviceId" element={<ServiceDetail />} />
                   <Route path="/why-us" element={<WhyUs />} />
+                  <Route path="/about" element={<AboutUs />} />
                   <Route path="/contact" element={<Contact />} />
                   <Route path="/sectors" element={<Sectors />} />
                   <Route path="/sectors/:sectorId" element={<SectorDetail />} />
                   <Route path="/sectors/:sectorId/:serviceId" element={<SectorServiceDetail />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/admin" element={<AdminDashboard />} />
+                  <Route path="/privacy-policy" element={<LegalPolicy />} />
+                  <Route path="/terms-of-service" element={<LegalPolicy />} />
+                  <Route path="/cookie-policy" element={<LegalPolicy />} />
                 </Routes>
               </main>
               

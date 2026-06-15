@@ -53,7 +53,7 @@ export const Login = () => {
         <div className="absolute inset-0 cyber-grid opacity-20 pointer-events-none" />
         <div className="orb orb-blue w-[600px] h-[600px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[0] opacity-20" />
         
-        <div className="relative z-10 w-full h-full flex flex-col justify-center px-16 xl:px-24">
+        <div className="relative z-10 w-full h-full flex flex-col justify-start px-16 xl:px-24">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -76,10 +76,10 @@ export const Login = () => {
       </div>
 
       {/* Right Pane - Auth Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 relative overflow-hidden">
+      <div className="w-full lg:w-1/2 flex items-center justify-start p-8 relative overflow-hidden">
         <div className="w-full max-w-md relative">
           <ScrollReveal>
-            <div className="text-center mb-10 relative">
+            <div className="text-left mb-10 relative">
               <h2 className="text-3xl font-display font-bold text-gray-900 dark:text-white mb-2">
                 Restricted Access
               </h2>
@@ -106,7 +106,7 @@ export const Login = () => {
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
-                  className="bg-[#25D366]/10 border border-[#25D366]/20 text-[#25D366] p-4 rounded-xl flex items-center justify-center gap-3 mb-6 text-sm font-bold"
+                  className="bg-[#25D366]/10 border border-[#25D366]/20 text-[#25D366] p-4 rounded-xl flex items-center justify-start gap-3 mb-6 text-sm font-bold"
                 >
                   <ShieldCheck className="w-5 h-5 shrink-0" />
                   <p>{successMsg}</p>
@@ -156,7 +156,7 @@ export const Login = () => {
                 <button 
                   disabled={loading}
                   type="submit"
-                  className="w-full flex items-center justify-center gap-2 bg-cyan-500 hover:bg-cyan-400 disabled:bg-black/5 disabled:dark:bg-white/5 disabled:text-gray-400 disabled:dark:text-gray-500 text-slate-950 font-bold py-4 px-6 rounded-xl transition-colors mt-8 shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:shadow-[0_0_30px_rgba(6,182,212,0.5)] group disabled:shadow-none"
+                  className="w-full flex items-center justify-start gap-2 bg-cyan-500 hover:bg-cyan-400 disabled:bg-black/5 disabled:dark:bg-white/5 disabled:text-gray-400 disabled:dark:text-gray-500 text-slate-950 font-bold py-4 px-6 rounded-xl transition-colors mt-8 shadow-[0_0_20px_rgba(6,182,212,0.3)] hover:shadow-[0_0_30px_rgba(6,182,212,0.5)] group disabled:shadow-none"
                 >
                   <span>{loading ? 'Authenticating...' : 'Secure Access'}</span>
                   {!loading && <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}

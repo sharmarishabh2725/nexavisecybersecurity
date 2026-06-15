@@ -15,7 +15,7 @@ export const ServiceDetail = () => {
 
   if (!service) {
     return (
-      <div className="pt-32 pb-20 min-h-screen flex flex-col items-center justify-center">
+      <div className="pt-32 pb-20 min-h-screen flex flex-col items-start justify-start">
         <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">Service Not Found</h1>
         <p className="text-gray-600 dark:text-gray-400 mb-8">The requested service could not be located.</p>
         <Link to="/services" className="inline-flex items-center bg-gray-800 dark:bg-gray-200 text-white px-6 py-3 rounded-full hover:bg-gray-800 dark:bg-gray-200 transition-colors">

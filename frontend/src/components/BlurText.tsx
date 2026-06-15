@@ -19,8 +19,8 @@ interface BlurTextProps {
   direction?: 'top' | 'bottom';
   threshold?: number;
   rootMargin?: string;
-  animationFrom?: Record<string, unknown>;
-  animationTo?: Record<string, unknown>[];
+  animationFrom?: any;
+  animationTo?: any[];
   easing?: string | number[] | ((t: number) => number);
   onAnimationComplete?: () => void;
   stepDuration?: number;
@@ -87,11 +87,11 @@ const BlurText: React.FC<BlurTextProps> = ({
   const times = Array.from({ length: stepCount }, (_, i) => (stepCount === 1 ? 0 : i / (stepCount - 1)));
 
   return (
-    <Component ref={ref} className={className} style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+    <Component ref={ref} className={className} style={{ display: 'flex', flexWrap: 'wrap' }}>
       {elements.map((segment, index) => {
         const animateKeyframes = buildKeyframes(fromSnapshot, toSnapshots);
 
-        const spanTransition: Record<string, unknown> = {
+        const spanTransition: any = {
           duration: totalDuration,
           times,
           delay: (index * delay) / 1000

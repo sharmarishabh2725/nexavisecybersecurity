@@ -63,7 +63,7 @@ export const LocationModal = () => {
           />
 
           {/* Modal Container */}
-          <div className="fixed inset-0 z-[101] pointer-events-none flex items-center justify-center p-4 sm:p-6" style={{ zoom: 'var(--a11y-scale, 1)' } as React.CSSProperties}>
+          <div className="fixed inset-0 z-[101] pointer-events-none flex items-center justify-start p-4 sm:p-6" style={{ zoom: 'var(--a11y-scale, 1)' } as React.CSSProperties}>
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -107,7 +107,7 @@ export const LocationModal = () => {
                 <button 
                   onClick={handleAutoDetect}
                   disabled={isDetecting}
-                  className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl bg-black/5 dark:bg-white/5 hover:bg-black/5 dark:bg-white/5 text-gray-900 dark:text-white text-sm font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full flex items-center justify-start gap-2 py-3 rounded-2xl bg-black/5 dark:bg-white/5 hover:bg-black/5 dark:bg-white/5 text-gray-900 dark:text-white text-sm font-bold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isDetecting ? (
                     <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1, ease: "linear" }}>
@@ -150,7 +150,7 @@ export const LocationModal = () => {
                     })}
                   </div>
                 ) : (
-                  <div className="py-12 text-center text-gray-500">
+                  <div className="py-12 text-left text-gray-500">
                     No locations found matching "{searchQuery}"
                   </div>
                 )}
